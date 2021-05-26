@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
 
   private void processRequest(HttpServletRequest request,
       HttpServletResponse response) throws ServletException, IOException {
+    System.out.println("PROCES");
 
     String page;
     try {

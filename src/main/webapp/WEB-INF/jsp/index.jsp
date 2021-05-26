@@ -1,10 +1,7 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Avie Company</title>
-</head>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <body>
 <div>Hello guest</div>
-<li><a href="/Airline?command=redirectLogin">Login</a></li>
+<jsp:include page="header.jsp"/>
+<li><a href="/Agency?command=login">Login</a></li>
 </body>
 </html>

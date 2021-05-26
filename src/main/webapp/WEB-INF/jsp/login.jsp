@@ -1,11 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Ser-Agency</title>
-</head>
 <body>
+<jsp:include page="header.jsp"/>
 <form method="POST">
+    <label class="registration" for=""><c:out value="${successRegistration}"/></label>
+    <label class="error" for=""><c:out value="${exception}"/></label>
     <div><input name="command" value="login" type="hidden"/></div>
     <div>
         <div>
@@ -27,6 +25,6 @@
         </div>
     </div>
 </form>
-<li><a href="/Airline?command=redirectRegistration">Login</a></li>
+<li><a href="/Agency?command=redirectRegistration">Registration</a></li>
 </body>
 </html>

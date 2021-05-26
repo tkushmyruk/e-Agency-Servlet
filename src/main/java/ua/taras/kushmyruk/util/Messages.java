@@ -3,21 +3,19 @@ package ua.taras.kushmyruk.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public final class ExceptionMessage {
-  public static final String MESSAGE_ERROR = "messageError";
-  public static final String ERROR_PAGE = "Error page found ";
+public final class Messages {
+  public static final String successMessage = "Registration success: ";
 
   public static final Locale ENGLISH = new Locale("en", "US");
   public static final Locale UKRAINIAN = new Locale("uk", "UA");
 
-  private static final String BUNDLE_NAME = "/i18n/exception";
+  private static final String BUNDLE_NAME = "/i18n/messages";
   private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH);
 
   public static void setLocale(Locale locale) {
-    System.out.println(locale.toString());
-    System.out.println("EXCEPTION SET LOCALE");
+    System.out.println("START SET LOCALE");
     resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
-    System.out.println("EXCEPTION RESOURCE BUNDLE");
+    System.out.println("RESOURCE BUNDLE");
   }
 
   public static String getMessage(String key) {

@@ -8,6 +8,7 @@ import ua.taras.kushmyruk.util.Pages;
 public class DefaultCommand implements Command {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws AppException {
+    System.out.println("DEF");
     return Pages.INDEX_PAGE;
   }
 

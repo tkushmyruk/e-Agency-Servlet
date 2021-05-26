@@ -18,7 +18,7 @@ public class LoginCommand  implements Command{
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
     userService.loginUser(request, response);
-    return Pages.INDEX_PAGE;
+    return Pages.LOGIN_PAGE;
   }
 
   @Override

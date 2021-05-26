@@ -17,7 +17,8 @@ public class CommandFactory {
   public CommandFactory() {
     commandMap.put(CommandNames.INDEX_COMMAND, new DefaultCommand());
     commandMap.put(CommandNames.LOGIN_COMMAND, new LoginCommand(serviceFactory.getUserService()));
-    commandMap.put(CommandNames.REGISTRATION, new RegistrationCommand(serviceFactory.getUserService()));
+    commandMap.put(CommandNames.REGISTRATION_COMMAND, new RegistrationCommand(serviceFactory.getUserService()));
+    commandMap.put(CommandNames.LANGUAGE_COMMAND, new LanguageCommand());
   }
 
   private static class CommandFactoryHolder {
@@ -30,7 +31,7 @@ public class CommandFactory {
 
   public String invoke(HttpServletRequest request, HttpServletResponse response) throws RuntimeException {
     String commandName = request.getParameter(CommandNames.PARAMETER_COMMAND);
-    LOGGER.info(CommandNames.PARAMETER_COMMAND + commandName);
+    LOGGER.info(CommandNames.PARAMETER_COMMAND + " " + commandName);
     Command command = commandMap.get(commandName);
     if (command == null) {
       command = new DefaultCommand();
