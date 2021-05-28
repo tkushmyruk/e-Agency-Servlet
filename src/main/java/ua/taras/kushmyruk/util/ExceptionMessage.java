@@ -15,9 +15,7 @@ public final class ExceptionMessage {
 
   public static void setLocale(Locale locale) {
     System.out.println(locale.toString());
-    System.out.println("EXCEPTION SET LOCALE");
     resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
-    System.out.println("EXCEPTION RESOURCE BUNDLE");
   }
 
   public static String getMessage(String key) {

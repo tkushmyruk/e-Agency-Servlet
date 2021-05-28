@@ -1,14 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <body>
-<jsp:include page="header.jsp"/>
-<form method="POST">
+<%@include file="/WEB-INF/jsp/header.jsp" %>
+<form action="Agency" method="POST">
     <label class="registration" for=""><c:out value="${successRegistration}"/></label>
     <label class="error" for=""><c:out value="${exception}"/></label>
     <div><input name="command" value="login" type="hidden"/></div>
     <div>
         <div>
             <label><fmt:message key="login" bundle="${bundle}"/></label>
-            <input type="text" id="login" name="login"  required />
+            <input type="text" id="username" name="username"  required />
         </div>
         <div>
             <label><fmt:message key="password" bundle="${bundle}" /></label>
@@ -25,6 +25,5 @@
         </div>
     </div>
 </form>
-<li><a href="/Agency?command=redirectRegistration">Registration</a></li>
 </body>
 </html>

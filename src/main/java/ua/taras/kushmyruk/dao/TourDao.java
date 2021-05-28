@@ -1,6 +1,7 @@
 package ua.taras.kushmyruk.dao;
 
 import java.time.LocalDate;
+import java.util.List;
 import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 
@@ -12,5 +13,7 @@ public interface TourDao {
       boolean isAllInclusive, boolean isHot, User user);
 
   Tour findTourByTourName (String tourName);
+
+  List<Tour> findAllNotBoughtTours();
 
 }

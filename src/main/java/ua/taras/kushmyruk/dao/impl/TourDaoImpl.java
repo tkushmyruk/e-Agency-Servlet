@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import ua.taras.kushmyruk.dao.ConnectionBuilder;
 import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.model.HotelStars;
@@ -32,6 +34,13 @@ public class TourDaoImpl implements TourDao {
 
   private static final String INSERT_HOTEL_STARS = "INSERT INTO hotel_stars(tour_id, hotel_stars)"
       + "VALUES(?, ?);";
+
+  private static final String GET_ALL_NOT_BOUGHT_TOURS = "SELECT * FROM tour t "
+      + "INNER JOIN tour_type tt ON tt.tour_id = t.tour_id "
+      + "INNER JOIN tour_status ts ON ts.tour_id = t.tour_id "
+      + "INNER JOIN room_type rt ON rt.tour_id = t.tour_id "
+      + "INNER JOIN hotel_stars hs ON hs.tour_id = t.tour_id "
+      + "WHERE ts.status = 'Registered'";
 
   private static final String GET_TOUR = "SELECT * FROM tour WHERE tour_name = ?;";
 
@@ -77,6 +86,23 @@ public class TourDaoImpl implements TourDao {
     return tour;
   }
 
+  @Override
+  public List<Tour> findAllNotBoughtTours() {
+    List<Tour> tours = new ArrayList<>();
+    try(Connection connection = getConnection();
+    PreparedStatement statement = connection.prepareStatement(GET_ALL_NOT_BOUGHT_TOURS)) {
+      ResultSet resultSet = statement.executeQuery();
+      while (resultSet.next()){
+        Tour tour = new Tour();
+        tour.setTourName(resultSet.getString("tour_name"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } ;
+    return tours;
+  }
+
   private TourType getTourType(Connection connection, String tourName) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(GET_TOUR_TYPE);
     statement.setString(1, tourName);
@@ -84,7 +110,7 @@ public class TourDaoImpl implements TourDao {
     return TourType.valueOf(resultSet.getString("tour_type"));
   }
   private TourStatus getTourStatus(Connection connection, String tourName) throws SQLException {
-    PreparedStatement statement = connection.prepareStatement(GET_TOUR_TYPE);
+    PreparedStatement statement = connection.prepareStatement(GET_TOUR_STATUS);
     statement.setString(1, tourName);
     ResultSet resultSet = statement.executeQuery();
     return TourStatus.valueOf(resultSet.getString("tour_status"));

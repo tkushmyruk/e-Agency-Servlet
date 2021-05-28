@@ -19,6 +19,9 @@ public class CommandFactory {
     commandMap.put(CommandNames.LOGIN_COMMAND, new LoginCommand(serviceFactory.getUserService()));
     commandMap.put(CommandNames.REGISTRATION_COMMAND, new RegistrationCommand(serviceFactory.getUserService()));
     commandMap.put(CommandNames.LANGUAGE_COMMAND, new LanguageCommand());
+    commandMap.put(CommandNames.REDIRECT_REGISTRATION_COMMAND, new RedirectCommand(CommandNames.REGISTRATION_COMMAND));
+    commandMap.put(CommandNames.REDIRECT_LOGIN_COMMAND, new RedirectCommand(CommandNames.LOGIN_COMMAND));
+    commandMap.put(CommandNames.LOGOUT, new LogoutCommand(serviceFactory.getUserService()));
   }
 
   private static class CommandFactoryHolder {
@@ -32,6 +35,7 @@ public class CommandFactory {
   public String invoke(HttpServletRequest request, HttpServletResponse response) throws RuntimeException {
     String commandName = request.getParameter(CommandNames.PARAMETER_COMMAND);
     LOGGER.info(CommandNames.PARAMETER_COMMAND + " " + commandName);
+    System.out.println(commandName);
     Command command = commandMap.get(commandName);
     if (command == null) {
       command = new DefaultCommand();

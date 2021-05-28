@@ -11,4 +11,10 @@ public final class Parameters {
   public static final String EN = "en";
   public static final String EN_US = "en_US";
   public static final String UK_UA = "uk_UA";
+  public static final String EXCEPTION = "exception";
+  public static final String USER = "user";
+  public static final String PATH_PREFIX = "WEB-INF/jsp/";
+  public static final String PATH_SUFFIX = ".jsp";
+  public static final String ADMIN_PARAM = "admin";
+  public static final String STATUS = "status";
 }

@@ -2,12 +2,14 @@ package ua.taras.kushmyruk.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.exception.AppException;
 import ua.taras.kushmyruk.service.UserService;
 import ua.taras.kushmyruk.util.Pages;
 
 public class LoginCommand  implements Command{
+  private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
   private UserService userService;
 
   public LoginCommand(UserService userService) {
@@ -17,8 +19,10 @@ public class LoginCommand  implements Command{
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
+    System.out.println("Login page");
     userService.loginUser(request, response);
-    return Pages.LOGIN_PAGE;
+    System.out.println("After login");
+    return Pages.INDEX_PAGE;
   }
 
   @Override

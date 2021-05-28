@@ -6,5 +6,8 @@ public final class CommandNames {
   public static final String LOGIN_COMMAND = "login";
   public static final String REGISTRATION_COMMAND = "registration";
   public static final String LANGUAGE_COMMAND = "setLang";
+  public static final String REDIRECT_LOGIN_COMMAND = "redirectLogin";
+  public static final String REDIRECT_REGISTRATION_COMMAND = "redirectRegistration";
+  public static final String LOGOUT = "logout";
 
 }

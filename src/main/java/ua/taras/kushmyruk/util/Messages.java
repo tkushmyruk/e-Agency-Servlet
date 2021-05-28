@@ -13,9 +13,7 @@ public final class Messages {
   private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH);
 
   public static void setLocale(Locale locale) {
-    System.out.println("START SET LOCALE");
     resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
-    System.out.println("RESOURCE BUNDLE");
   }
 
   public static String getMessage(String key) {

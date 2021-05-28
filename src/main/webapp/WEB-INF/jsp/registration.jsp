@@ -5,12 +5,13 @@
     <title>Avie Company</title>
 </head>
 <body>
-<form method="POST">
+<%@include file="/WEB-INF/jsp/header.jsp" %>
+<form action="Agency" method="POST">
     <div><input name="command" value="registration" type="hidden"/></div>
     <div>
         <div>
             <label><fmt:message key="login" bundle="${bundle}" /></label>
-            <input type="text" id="login" name="login" required />
+            <input type="text" id="username" name="username" required />
         </div>
     </div>
     <div>
