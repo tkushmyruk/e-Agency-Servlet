@@ -26,6 +26,11 @@ public class CommandFactory {
     commandMap.put(CommandNames.ADD_TOUR_COMMAND, new AddTourCommand(serviceFactory.getTourService()));
     commandMap.put(CommandNames.REDIRECT_ADD_TOUR_COMMAND, new RedirectCommand(CommandNames.ADD_TOUR_COMMAND));
     commandMap.put(CommandNames.TOUR_INFO_COMMAND, new TourInfoCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.BUY_TOUR_COMMAND, new BuyTourCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.USER_PROFILE_COMMAND, new UserProfileCommand());
+    commandMap.put(CommandNames.ADMIN_PROFILE_COMMAND, new AdminProfileCommand());
+    commandMap.put(CommandNames.USER_LIST_COMMAND, new UserListCommand(serviceFactory.getProfileService()));
+    commandMap.put(CommandNames.USER_EDIT_COMMAND, new UserEditCommand(serviceFactory.getProfileService()));
 
   }
 

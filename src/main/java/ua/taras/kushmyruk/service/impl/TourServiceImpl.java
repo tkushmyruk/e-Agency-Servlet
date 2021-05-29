@@ -34,7 +34,6 @@ public class TourServiceImpl implements TourService {
   @Override
   public void getTourByTourName(HttpServletRequest request, HttpServletResponse response) {
     Tour tourByTourName = tourDao.findTourByTourName(request.getParameter(Parameters.TOUR_NAME));
-    System.out.println(tourByTourName.getTourName() + "  - TOUR NAME");
         request.setAttribute(Parameters.TOUR, tourByTourName);
   }
 
@@ -56,5 +55,12 @@ public class TourServiceImpl implements TourService {
     boolean isHot = request.getParameter(Parameters.IS_HOT) != null;
     tourDao.saveTour(tourName,countOfPeople, price, startDate, endDate, departingFrom, country, locality,
         tourType, roomType, hotelStars, hotelName, isAllInclusive, isHot);
+  }
+
+  @Override
+  public void buyTour(HttpServletRequest request, HttpServletResponse response) {
+    String tourName = request.getParameter(Parameters.TOUR_NAME);
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    boolean user = tourDao.setUserForTour(tourName, username);
   }
 }

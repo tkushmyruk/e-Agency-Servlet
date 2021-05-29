@@ -29,14 +29,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void loginUser(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println("Login user method");
     String username = request.getParameter(Parameters.USERNAME);
     String password = request.getParameter(Parameters.PASSWORD);
-    System.out.println(username + " " + password);
     User userFromDb = userDao.findUserByUsername(username);
-    System.out.println(userFromDb == null);
     if(userFromDb != null && userFromDb.getPassword().equals(password)) {
-      System.out.println("If block");
       request.getSession().setAttribute(Parameters.USER_AUTH, userFromDb.getUsername());
       request.getSession().setAttribute(Parameters.ROLE, userFromDb.getRole().toString());
       logger.info("User {} successfully signed in", username);

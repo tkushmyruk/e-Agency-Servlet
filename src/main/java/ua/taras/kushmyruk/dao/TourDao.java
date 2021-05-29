@@ -16,5 +16,7 @@ public interface TourDao {
 
   List<Tour> findAllNotBoughtTours();
 
+  boolean setUserForTour(String tourName, String username);
+
 
 }

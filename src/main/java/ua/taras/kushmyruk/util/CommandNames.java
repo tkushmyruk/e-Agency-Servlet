@@ -13,6 +13,10 @@ public final class CommandNames {
   public static final String TOUR_INFO_COMMAND = "tourInfo";
   public static final String ADD_TOUR_COMMAND = "addTour";
   public static final String REDIRECT_ADD_TOUR_COMMAND = "redirectAddTour";
-  public static final String BUT_TOUR_COMMAND = "buyCommand";
+  public static final String BUY_TOUR_COMMAND = "buyCommand";
+  public static final String USER_PROFILE_COMMAND = "userProfile";
+  public static final String ADMIN_PROFILE_COMMAND = "adminProfile";
+  public static final String USER_LIST_COMMAND = "userList";
+  public static final String USER_EDIT_COMMAND = "userEdit";
 
 }

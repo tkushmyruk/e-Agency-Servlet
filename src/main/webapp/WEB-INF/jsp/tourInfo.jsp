@@ -32,7 +32,8 @@ ${tour.getRoomType().toString()} <fmt:message key="class" bundle="${bundle}" /><
 </c:if>
 </div>
 <div>
-    <form method="post">
+    <form action="Agency?command=buyCommand" method="post">
+        <input type="hidden" name="tourName" value="${tour.getTourName()}">
         <button type="submit"><fmt:message key="buy" bundle="${bundle}" /></button>
     </form>
 </div>

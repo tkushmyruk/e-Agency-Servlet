@@ -8,4 +8,7 @@ public final class Pages {
   public static final String TOUR_LIST_PAGE = "WEB-INF/jsp/tourCatalog.jsp";
   public static final String ADD_TOUR_PAGE = "WEB-INF/jsp/addTour.jsp";
   public static final String TOUR_INFO_PAGE = "WEB-INF/jsp/tourInfo.jsp";
+  public static final String USER_PROFILE_PAGE = "WEB-INF/jsp/userProfile.jsp";
+  public static final String ADMIN_PROFILE_PAGE = "WEB-INF/jsp/adminProfile.jsp";
+  public static final String USER_LIST_PAGE = "WEB-INF/jsp/userList.jsp";
 }

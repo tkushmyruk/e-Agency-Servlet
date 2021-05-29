@@ -33,4 +33,7 @@ public final class Parameters {
   public static final String IS_HOT = "isHot";
   public static final String NOT_BOUGHT_TOURS = "notBoughtTours";
   public static final String TOUR = "tour";
+  public static final String TOUR_BUY = "tourBuy";
+  public static final String USER_LIST = "userList";
+  public static final String METHOD = "method";
 }

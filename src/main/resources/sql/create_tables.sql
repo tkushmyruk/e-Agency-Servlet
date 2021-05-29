@@ -23,6 +23,16 @@ PRIMARY KEY (user_role_id),
 FOREIGN KEY(username) REFERENCES usr(username) ON DELETE RESTRICT
 );
 
+CREATE TABLE credit_card(
+credit_card_id SERIAL,
+username VARCHAR (30) NOT NULL,
+card_number VARCHAR (19),
+card_password VARCHAR (60),
+balance DECIMAL,
+PRIMARY KEY (credit_card_id),
+FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
+);
+
 CREATE TABLE tour(
 tour_id SERIAL,
 tour_name varchar(30) UNIQUE ,

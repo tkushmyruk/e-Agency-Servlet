@@ -15,7 +15,6 @@ import ua.taras.kushmyruk.model.RoomType;
 import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.TourStatus;
 import ua.taras.kushmyruk.model.TourType;
-import ua.taras.kushmyruk.model.User;
 
 public class TourDaoImpl implements TourDao {
   private static final String INSERT_TOUR = "INSERT INTO tour(tour_name, count_of_people, price,"
@@ -54,6 +53,11 @@ public class TourDaoImpl implements TourDao {
 
   private static final String GET_HOTEL_STARS = "SELECT * FROM hotel_stars WHERE tour_name = ?;";
 
+  private static final String SET_USER_FOR_TOUR = "UPDATE tour SET username = ? WHERE tour_name = ?; ";
+
+  private static final String UPDATE_TOUR_STATUS = "UPDATE tour_status SET tour_status = ?"
+      + " WHERE tour_name = ?;";
+
   private Connection getConnection() throws SQLException {
     return ConnectionBuilder.getConnection();
   }
@@ -82,8 +86,6 @@ public class TourDaoImpl implements TourDao {
       tour.setTourType(getTourType(connection, tourName));
       tour.setRoomType(getRoomType(connection, tourName));
       tour.setHotelStars(getHotelStars(connection, tourName));
-
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -115,7 +117,6 @@ public class TourDaoImpl implements TourDao {
         tour.setHotelStars(HotelStars.valueOf(resultSet.getString("hotel_stars")));
         tours.add(tour);
       }
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -172,7 +173,7 @@ public class TourDaoImpl implements TourDao {
         statement.setBoolean(9, isAllInclusive);
         statement.setBoolean(10, isHot);
         statement.setString(11, hotelName);
-        int i = statement.executeUpdate();
+        statement.executeUpdate();
         saveTourType(connection,tourName, tourType);
         saveTourStatus(connection, tourName);
         saveRoomType(connection, tourName, roomType);
@@ -192,31 +193,59 @@ public class TourDaoImpl implements TourDao {
     PreparedStatement statement = connection.prepareStatement(INSERT_TOUR_TYPE);
     statement.setString(1, tourName);
     statement.setString(2, tourType);
-    int i = statement.executeUpdate();
-    System.out.println("TOur type - " + i);
+    statement.executeUpdate();
   }
 
   private void saveTourStatus(Connection connection, String tourName) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(INESRT_TOUR_STATUS);
     statement.setString(1, tourName);
     statement.setString(2, TourStatus.REGISTERED.toString());
-    int i = statement.executeUpdate();
-    System.out.println("TOur status - " + i);
+    statement.executeUpdate();
   }
 
   private void saveRoomType(Connection connection, String tourName, String roomType) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(INSERT_ROOM_TYPE);
     statement.setString(1, tourName);
     statement.setString(2, roomType);
-    int i = statement.executeUpdate();
-    System.out.println("room type - " + i);
+    statement.executeUpdate();
   }
 
   private void saveHotelStars(Connection connection, String tourName, String hotelStars) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(INSERT_HOTEL_STARS);
     statement.setString(1, tourName);
     statement.setString(2, hotelStars);
-    int i = statement.executeUpdate();
-    System.out.println("Hotel stars - " + i);
+    statement.executeUpdate();
+  }
+
+  @Override
+  public boolean setUserForTour(String tourName, String username) {
+    boolean result = false;
+    try(Connection connection = getConnection();
+    PreparedStatement statement = connection.prepareStatement(SET_USER_FOR_TOUR)) {
+      connection.setAutoCommit(false);
+      try {
+        statement.setString(1, username);
+        statement.setString(2, tourName);
+        statement.executeUpdate();
+        updateTourStatus(tourName, "BOUGHT", connection);
+        connection.commit();
+        result = true;
+      } catch (Exception e) {
+        connection.rollback();
+        e.printStackTrace();
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return result;
+  }
+
+  private void updateTourStatus(String tourName, String status, Connection connection)
+      throws SQLException {
+    PreparedStatement statement = connection.prepareStatement(UPDATE_TOUR_STATUS);
+    statement.setString(1, status);
+    statement.setString(2, tourName);
+    statement.executeUpdate();
   }
 }

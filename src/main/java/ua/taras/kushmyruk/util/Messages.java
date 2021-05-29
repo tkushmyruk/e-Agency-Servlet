@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public final class Messages {
-  public static final String successMessage = "Registration success: ";
 
   public static final Locale ENGLISH = new Locale("en", "US");
   public static final Locale UKRAINIAN = new Locale("uk", "UA");

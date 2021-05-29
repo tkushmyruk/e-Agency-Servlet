@@ -33,7 +33,6 @@ public class MainServlet extends HttpServlet {
   private void processRequest(HttpServletRequest request,
       HttpServletResponse response) throws ServletException, IOException {
     String page;
-    System.out.println("Servlet");
     try {
       page = commandFactory.invoke(request, response);
       request.getSession().setAttribute(Parameters.PAGE, page);
