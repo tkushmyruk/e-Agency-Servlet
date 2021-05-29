@@ -1,11 +1,15 @@
 package ua.taras.kushmyruk.service;
 
-import java.util.List;
-import ua.taras.kushmyruk.model.Tour;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface TourService {
 
-  List<Tour> getNotBoughtTours();
+  void getNotBoughtTours(HttpServletRequest request, HttpServletResponse response);
+
+  void addTour(HttpServletRequest request, HttpServletResponse response);
+
+  void getTourByTourName(HttpServletRequest request, HttpServletResponse response);
 
 
 }

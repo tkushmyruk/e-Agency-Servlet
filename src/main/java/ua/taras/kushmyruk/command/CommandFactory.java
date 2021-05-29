@@ -22,6 +22,11 @@ public class CommandFactory {
     commandMap.put(CommandNames.REDIRECT_REGISTRATION_COMMAND, new RedirectCommand(CommandNames.REGISTRATION_COMMAND));
     commandMap.put(CommandNames.REDIRECT_LOGIN_COMMAND, new RedirectCommand(CommandNames.LOGIN_COMMAND));
     commandMap.put(CommandNames.LOGOUT, new LogoutCommand(serviceFactory.getUserService()));
+    commandMap.put(CommandNames.TOUR_LIST_COMMAND, new TourListCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.ADD_TOUR_COMMAND, new AddTourCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.REDIRECT_ADD_TOUR_COMMAND, new RedirectCommand(CommandNames.ADD_TOUR_COMMAND));
+    commandMap.put(CommandNames.TOUR_INFO_COMMAND, new TourInfoCommand(serviceFactory.getTourService()));
+
   }
 
   private static class CommandFactoryHolder {

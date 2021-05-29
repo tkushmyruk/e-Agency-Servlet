@@ -9,5 +9,10 @@ public final class CommandNames {
   public static final String REDIRECT_LOGIN_COMMAND = "redirectLogin";
   public static final String REDIRECT_REGISTRATION_COMMAND = "redirectRegistration";
   public static final String LOGOUT = "logout";
+  public static final String TOUR_LIST_COMMAND = "tourList";
+  public static final String TOUR_INFO_COMMAND = "tourInfo";
+  public static final String ADD_TOUR_COMMAND = "addTour";
+  public static final String REDIRECT_ADD_TOUR_COMMAND = "redirectAddTour";
+  public static final String BUT_TOUR_COMMAND = "buyCommand";
 
 }

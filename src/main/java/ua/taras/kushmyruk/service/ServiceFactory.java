@@ -1,5 +1,6 @@
 package ua.taras.kushmyruk.service;
 
+import ua.taras.kushmyruk.service.impl.TourServiceImpl;
 import ua.taras.kushmyruk.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
@@ -16,5 +17,9 @@ public class ServiceFactory {
   }
 
   public UserService getUserService(){return UserServiceImpl.getInstance(); }
+
+  public TourService getTourService(){
+    return TourServiceImpl.getInstance();
+  }
 
 }

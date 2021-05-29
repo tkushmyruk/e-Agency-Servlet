@@ -29,6 +29,7 @@
             <li><a href="/Agency?command=profile"><fmt:message key="profile" bundle="${bundle}" /></a></li>
         </c:if>
         <li><a href="/Agency?command=logout"><fmt:message key="logout" bundle="${bundle}" /></a></li>
+        <li><a href="/Agency?command=tourList"><fmt:message key="tours" bundle="${bundle}" /></a></li>
     </c:if>
     <br/>
     <br/>

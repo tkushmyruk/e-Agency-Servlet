@@ -25,7 +25,7 @@ FOREIGN KEY(username) REFERENCES usr(username) ON DELETE RESTRICT
 
 CREATE TABLE tour(
 tour_id SERIAL,
-user_id INT NOT NULL,
+tour_name varchar(30) UNIQUE ,
 count_of_people INT NOT NULL,
 price DECIMAL NOT NULL,
 start_date TIMESTAMP NOT NULL,
@@ -36,38 +36,39 @@ locality VARCHAR(100) NOT NULL,
 hotel_name VARCHAR(100) NOT NULL,
 is_all_inclusive BOOLEAN DEFAULT FALSE,
 is_hot BOOLEAN DEFAULT FALSE,
+username VARCHAR (30),
 PRIMARY KEY (tour_id),
-FOREIGN KEY (user_id) REFERENCES usr(id) ON DELETE RESTRICT
+FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
 );
 
 CREATE TABLE room_type(
 room_type_id SERIAL,
-tour_id INT NOT NULL,
+tour_name VARCHAR (30) NOT NULL,
 room_type VARCHAR(100),
 PRIMARY KEY (room_type_id),
-FOREIGN KEY (tour_id) REFERENCES tour(tour_id) ON DELETE RESTRICT
+FOREIGN KEY (tour_name) REFERENCES tour(tour_name) ON DELETE RESTRICT
 );
 
 CREATE TABLE tour_type(
 tour_type_id SERIAL,
-tour_id INT NOT NULL,
+tour_name  VARCHAR (30)  NOT NULL,
 tour_type VARCHAR(100),
 PRIMARY KEY (tour_type_id),
-FOREIGN KEY (tour_id) REFERENCES tour(tour_id) ON DELETE RESTRICT
+FOREIGN KEY (tour_name) REFERENCES tour(tour_name) ON DELETE RESTRICT
 );
 
 CREATE TABLE hotel_stars(
 hotel_stars_id SERIAL,
-tour_id INT NOT NULL,
+tour_name VARCHAR (30)  NOT NULL,
 hotel_stars VARCHAR(100),
 PRIMARY KEY (hotel_stars_id),
-FOREIGN KEY (tour_id) REFERENCES tour(tour_id) ON DELETE RESTRICT
+FOREIGN KEY (tour_name) REFERENCES tour(tour_name) ON DELETE RESTRICT
 );
 
-CREATE TABLE tour_type(
+CREATE TABLE tour_status(
 tour_status_id SERIAL,
-tour_id INT NOT NULL,
+tour_name VARCHAR(30) NOT NULL,
 tour_status VARCHAR(100),
 PRIMARY KEY (tour_status_id),
-FOREIGN KEY (tour_id) REFERENCES tour(tour_id) ON DELETE RESTRICT
+FOREIGN KEY (tour_name) REFERENCES tour(tour_name) ON DELETE RESTRICT
 );

@@ -1,6 +1,7 @@
 package ua.taras.kushmyruk.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,29 +19,30 @@ import ua.taras.kushmyruk.model.User;
 
 public class TourDaoImpl implements TourDao {
   private static final String INSERT_TOUR = "INSERT INTO tour(tour_name, count_of_people, price,"
-      + "start_date, end_date, departing_from, country, locality, is_all_inclusive, is_hot, hotel_name)"
+      + "start_date, end_date, departing_from, country, locality, is_all_inclusive, is_hot,"
+      + " hotel_name)"
       + "VALUES(?,?,?,?,?,"
       + "?,?,?,?,?,"
       + "?);";
 
-  private static final String INSERT_TOUR_TYPE = "INSERT INTO tour_type (tour_id, tour_type)"
+  private static final String INSERT_TOUR_TYPE = "INSERT INTO tour_type (tour_name, tour_type)"
       + "VALUES(?, ?);";
 
-  private static final String INSERT_ROOM_TYPE = "INSERT INTO room_type(tour_id, room_type)"
+  private static final String INSERT_ROOM_TYPE = "INSERT INTO room_type(tour_name, room_type)"
       + "VALUES(?, ?);";
 
-  private static final String INESRT_TOUR_STATUS = "INSERT INTO tour_status(tour_id, tour_status)"
+  private static final String INESRT_TOUR_STATUS = "INSERT INTO tour_status(tour_name, tour_status)"
       + "VALUES(?, ?);";
 
-  private static final String INSERT_HOTEL_STARS = "INSERT INTO hotel_stars(tour_id, hotel_stars)"
+  private static final String INSERT_HOTEL_STARS = "INSERT INTO hotel_stars(tour_name, hotel_stars)"
       + "VALUES(?, ?);";
 
   private static final String GET_ALL_NOT_BOUGHT_TOURS = "SELECT * FROM tour t "
-      + "INNER JOIN tour_type tt ON tt.tour_id = t.tour_id "
-      + "INNER JOIN tour_status ts ON ts.tour_id = t.tour_id "
-      + "INNER JOIN room_type rt ON rt.tour_id = t.tour_id "
-      + "INNER JOIN hotel_stars hs ON hs.tour_id = t.tour_id "
-      + "WHERE ts.status = 'Registered'";
+      + "INNER JOIN tour_type tt ON tt.tour_name = t.tour_name "
+      + "INNER JOIN tour_status ts ON ts.tour_name = t.tour_name "
+      + "INNER JOIN room_type rt ON rt.tour_name = t.tour_name "
+      + "INNER JOIN hotel_stars hs ON hs.tour_name = t.tour_name "
+      + "WHERE ts.tour_status = 'REGISTERED'";
 
   private static final String GET_TOUR = "SELECT * FROM tour WHERE tour_name = ?;";
 
@@ -63,12 +65,14 @@ public class TourDaoImpl implements TourDao {
     PreparedStatement statement = connection.prepareStatement(GET_TOUR)) {
       statement.setString(1, tourName);
       ResultSet resultSet = statement.executeQuery();
+      resultSet.next();
       tour = new Tour();
       tour.setTourName(resultSet.getString("tour_name"));
       tour.setPrice(resultSet.getString("price"));
       tour.setCountOfPeople(resultSet.getInt("count_of_people"));
       tour.setStartDate(resultSet.getDate("start_date").toLocalDate());
       tour.setEndDate(resultSet.getDate("end_date").toLocalDate());
+      tour.setDepartingFrom(resultSet.getString("departing_from"));
       tour.setLocality(resultSet.getString("locality"));
       tour.setCountry(resultSet.getString("country"));
       tour.setHotelName(resultSet.getString("hotel_name"));
@@ -95,11 +99,26 @@ public class TourDaoImpl implements TourDao {
       while (resultSet.next()){
         Tour tour = new Tour();
         tour.setTourName(resultSet.getString("tour_name"));
+        tour.setPrice(resultSet.getString("price"));
+        tour.setCountOfPeople(resultSet.getInt("count_of_people"));
+        tour.setStartDate(resultSet.getDate("start_date").toLocalDate());
+        tour.setEndDate(resultSet.getDate("end_date").toLocalDate());
+        tour.setDepartingFrom(resultSet.getString("departing_from"));
+        tour.setLocality(resultSet.getString("locality"));
+        tour.setCountry(resultSet.getString("country"));
+        tour.setHotelName(resultSet.getString("hotel_name"));
+        tour.setAllInclusive(resultSet.getBoolean("is_all_inclusive"));
+        tour.setHot(resultSet.getBoolean("is_hot"));
+        tour.setTourType(TourType.valueOf(resultSet.getString("tour_type")));
+        tour.setTourStatus(TourStatus.valueOf(resultSet.getString("tour_status")));
+        tour.setRoomType(RoomType.valueOf(resultSet.getString("room_type")));
+        tour.setHotelStars(HotelStars.valueOf(resultSet.getString("hotel_stars")));
+        tours.add(tour);
       }
 
     } catch (SQLException e) {
       e.printStackTrace();
-    } ;
+    }
     return tours;
   }
 
@@ -107,34 +126,97 @@ public class TourDaoImpl implements TourDao {
     PreparedStatement statement = connection.prepareStatement(GET_TOUR_TYPE);
     statement.setString(1, tourName);
     ResultSet resultSet = statement.executeQuery();
+    resultSet.next();
     return TourType.valueOf(resultSet.getString("tour_type"));
   }
   private TourStatus getTourStatus(Connection connection, String tourName) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(GET_TOUR_STATUS);
     statement.setString(1, tourName);
     ResultSet resultSet = statement.executeQuery();
+    resultSet.next();
     return TourStatus.valueOf(resultSet.getString("tour_status"));
   }
   private RoomType getRoomType(Connection connection, String tourName) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(GET_ROOM_TYPE);
     statement.setString(1, tourName);
     ResultSet resultSet = statement.executeQuery();
+    resultSet.next();
     return RoomType.valueOf(resultSet.getString("room_type"));
   }
   private HotelStars getHotelStars(Connection connection, String tourName) throws SQLException {
     PreparedStatement statement = connection.prepareStatement(GET_HOTEL_STARS);
     statement.setString(1, tourName);
     ResultSet resultSet = statement.executeQuery();
+    resultSet.next();
     return HotelStars.valueOf(resultSet.getString("hotel_stars"));
   }
 
   @Override
-  public void saveTour(Long id, String tourName, int countOfPeople, String price,
+  public void saveTour(String tourName, int countOfPeople, String price,
       LocalDate startDate, LocalDate endDate, String departingFrom, String country, String locality,
-      String tourType, String roomType, String tourStatus, String hotelStars, String hotelName,
-      boolean isAllInclusive, boolean isHot, User user) {
+      String tourType, String roomType, String hotelStars, String hotelName,
+      boolean isAllInclusive, boolean isHot) {
 
+    try(Connection connection = getConnection()) {
+      PreparedStatement statement = connection.prepareStatement(INSERT_TOUR, new String[]{"tour_id"});
+      connection.setAutoCommit(false);
+      try{
+        statement.setString(1, tourName);
+        statement.setInt(2, countOfPeople);
+        statement.setDouble(3, Double.valueOf(price));
+        statement.setDate(4, Date.valueOf(startDate));
+        statement.setDate(5, Date.valueOf(endDate));
+        statement.setString(6, departingFrom);
+        statement.setString(7, country);
+        statement.setString(8, locality);
+        statement.setBoolean(9, isAllInclusive);
+        statement.setBoolean(10, isHot);
+        statement.setString(11, hotelName);
+        int i = statement.executeUpdate();
+        saveTourType(connection,tourName, tourType);
+        saveTourStatus(connection, tourName);
+        saveRoomType(connection, tourName, roomType);
+        saveHotelStars(connection, tourName, hotelStars);
+        connection.commit();
+      } catch (SQLException e) {
+        connection.rollback();
+        e.printStackTrace();
+      }
 
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 
+  private void saveTourType(Connection connection, String tourName, String tourType) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement(INSERT_TOUR_TYPE);
+    statement.setString(1, tourName);
+    statement.setString(2, tourType);
+    int i = statement.executeUpdate();
+    System.out.println("TOur type - " + i);
+  }
+
+  private void saveTourStatus(Connection connection, String tourName) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement(INESRT_TOUR_STATUS);
+    statement.setString(1, tourName);
+    statement.setString(2, TourStatus.REGISTERED.toString());
+    int i = statement.executeUpdate();
+    System.out.println("TOur status - " + i);
+  }
+
+  private void saveRoomType(Connection connection, String tourName, String roomType) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement(INSERT_ROOM_TYPE);
+    statement.setString(1, tourName);
+    statement.setString(2, roomType);
+    int i = statement.executeUpdate();
+    System.out.println("room type - " + i);
+  }
+
+  private void saveHotelStars(Connection connection, String tourName, String hotelStars) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement(INSERT_HOTEL_STARS);
+    statement.setString(1, tourName);
+    statement.setString(2, hotelStars);
+    int i = statement.executeUpdate();
+    System.out.println("Hotel stars - " + i);
   }
 }
