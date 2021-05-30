@@ -18,4 +18,10 @@ public interface UserDao {
     void setBlock(String username);
 
     void changeUserRole(String username, String userRole);
+
+    void updateUser(String username, String password, String email);
+
+    void setCreditCard(String username, String cardNumber, String cardPassword);
+
+    void updateCreditCardBalance(String cardNumber, double balance);
 }

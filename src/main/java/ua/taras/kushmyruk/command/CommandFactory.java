@@ -27,11 +27,16 @@ public class CommandFactory {
     commandMap.put(CommandNames.REDIRECT_ADD_TOUR_COMMAND, new RedirectCommand(CommandNames.ADD_TOUR_COMMAND));
     commandMap.put(CommandNames.TOUR_INFO_COMMAND, new TourInfoCommand(serviceFactory.getTourService()));
     commandMap.put(CommandNames.BUY_TOUR_COMMAND, new BuyTourCommand(serviceFactory.getTourService()));
-    commandMap.put(CommandNames.USER_PROFILE_COMMAND, new UserProfileCommand());
+    commandMap.put(CommandNames.USER_PROFILE_COMMAND, new UserProfileCommand(serviceFactory.getUserService()));
     commandMap.put(CommandNames.ADMIN_PROFILE_COMMAND, new AdminProfileCommand());
     commandMap.put(CommandNames.USER_LIST_COMMAND, new UserListCommand(serviceFactory.getProfileService()));
     commandMap.put(CommandNames.USER_EDIT_COMMAND, new UserEditCommand(serviceFactory.getProfileService()));
-
+    commandMap.put(CommandNames.CHANGE_PASSWORD_COMMAND, new ChangePasswordCommand(serviceFactory.getUserService()));
+    commandMap.put(CommandNames.REDIRECT_ADD_CREDIT_CARD_COMMAND, new RedirectCommand(CommandNames.ADD_CREDIT_CARD_COMMAND));
+    commandMap.put(CommandNames.CREDIT_CARD_COMMAND, new CreditCardCommand(serviceFactory.getUserService()));
+    commandMap.put(CommandNames.REPLENISH_COMMAND, new ReplenishCardCommand(serviceFactory.getProfileService(), serviceFactory.getUserService()));
+    commandMap.put(CommandNames.ADD_CREDIT_CARD_COMMAND, new AddCreditCardCommand(serviceFactory.getProfileService(), serviceFactory.getUserService()));
+    commandMap.put(CommandNames.BOUGHT_TOUR_LIST_COMMAND, new BoughtTourListCommand(serviceFactory.getProfileService()));
   }
 
   private static class CommandFactoryHolder {

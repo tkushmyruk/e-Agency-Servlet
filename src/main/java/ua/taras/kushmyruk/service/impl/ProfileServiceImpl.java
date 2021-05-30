@@ -1,14 +1,21 @@
 package ua.taras.kushmyruk.service.impl;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
+import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
 import ua.taras.kushmyruk.dao.impl.UserDaoImpl;
+import ua.taras.kushmyruk.model.Tour;
+import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.ProfileService;
+import ua.taras.kushmyruk.util.Pages;
 import ua.taras.kushmyruk.util.Parameters;
 
 public class ProfileServiceImpl implements ProfileService {
   private static final UserDao userDao = new UserDaoImpl();
+  private static final TourDao tourDao = new TourDaoImpl();
 
   public ProfileServiceImpl() {
   }
@@ -49,6 +56,36 @@ public class ProfileServiceImpl implements ProfileService {
 
   private void changeRoleUser(HttpServletRequest request, HttpServletResponse response){
     userDao.changeUserRole(request.getParameter(Parameters.USERNAME), request.getParameter(Parameters.ROLE));
+  }
+
+  @Override
+  public void addCreditCard(HttpServletRequest request, HttpServletResponse response) {
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
+    String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
+    userDao.setCreditCard(username, cardNumber, cardPassword);
+  }
+
+  @Override
+  public void replenishCard(HttpServletRequest request, HttpServletResponse response) {
+    System.out.println("REPLENISH CARD");
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
+    String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
+    double balance = Double.valueOf(request.getParameter(Parameters.REPLENISH));
+    User user = userDao.findUserByUsername(username);
+    System.out.println(user.getCreditCard().getCardPassword() + " - CARD PASS - " + cardPassword );
+    if(user.getCreditCard().getCardPassword().equals(cardPassword)) {
+      System.out.println("IF BLOCK CREDIT CARD");
+      userDao.updateCreditCardBalance(cardNumber, balance);
+    }
+  }
+
+  @Override
+  public void getBoughtTours(HttpServletRequest request, HttpServletResponse response) {
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    List<Tour> allBoughtToursByUsername = tourDao.findAllBoughtToursByUsername(username);
+    request.setAttribute(Parameters.USER_TOURS, allBoughtToursByUsername);
   }
 }
 

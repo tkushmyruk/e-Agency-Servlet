@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import ua.taras.kushmyruk.dao.ConnectionBuilder;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.exception.DaoException;
+import ua.taras.kushmyruk.model.CreditCard;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.model.UserRole;
 
@@ -22,9 +23,15 @@ public class UserDaoImpl implements UserDao {
   private final String INSERT_USER_ROLE = "INSERT INTO user_role (username, role) "
       + "VALUES(?,?);";
 
-  private final String GET_USER_BY_USERNAME = "SELECT * FROM usr u WHERE u.username = ?; ";
+  private final String INSERT_CREDIT_CARD = "INSERT INTO credit_card (card_number, card_password, username)"
+      + "VALUES(?,?,?);";
 
-  private final String GET_USER_ROLE = "SELECT * FROM user_role r WHERE r.username = ?";
+  private final String GET_USER_BY_USERNAME = "SELECT * FROM usr u "
+      + "INNER JOIN user_role ur ON u.username = ur.username "
+      + "WHERE u.username = ?; ";
+
+  private final String GET_USER_CREDIT_CARD = "SELECT * FROM credit_card WHERE username = ?;";
+
 
   private final String GET_ALL_USERS = "SELECT * FROM usr u INNER JOIN user_role r "
       + "ON u.username = r.username;";
@@ -32,6 +39,12 @@ public class UserDaoImpl implements UserDao {
   private final String UPDATE_IS_ACTIVE = "UPDATE usr SET is_active = ? WHERE username = ?;";
 
   private final String UPDATE_USER_ROLE = "UPDATE user_role SET role = ? WHERE username = ?;";
+
+  private final String UPDATE_USER = "UPDATE usr SET password = ?, email = ? WHERE username = ?;";
+
+  private final String UPDATE_CARD_BALANCE = "UPDATE credit_card SET balance = ? WHERE card_number = ?;";
+
+
 
   private Connection getConnection() throws SQLException {
     Connection connection = ConnectionBuilder.getConnection();
@@ -44,13 +57,15 @@ public class UserDaoImpl implements UserDao {
     PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME)){
       preparedStatement.setString(1, username);
       ResultSet resultSet = preparedStatement.executeQuery();
-      resultSet.next();
+      boolean next = resultSet.next();
       if(resultSet.getString("username").equals(username)) {
         User user = new User();
         user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
         user.setEmail(resultSet.getString("email"));
-        user.setRole(getUserRole(connection, username));
+        user.setActive(resultSet.getBoolean("is_active"));
+        user.setRole(UserRole.valueOf(resultSet.getString("role")));
+        user.setCreditCard(getCreditCard(username));
         return user;
       }
 
@@ -61,16 +76,22 @@ public class UserDaoImpl implements UserDao {
     return null;
   }
 
-  private UserRole getUserRole (Connection connection, String username) throws SQLException {
-    PreparedStatement statement = connection.prepareStatement(GET_USER_ROLE);
+  private CreditCard getCreditCard(String username) throws SQLException {
+    Connection connection = getConnection();
+    PreparedStatement statement = connection.prepareStatement(GET_USER_CREDIT_CARD);
     statement.setString(1, username);
     ResultSet resultSet = statement.executeQuery();
     if(resultSet.next()) {
-      UserRole userRole = UserRole.valueOf(resultSet.getString("role"));
-      return userRole;
+      CreditCard creditCard = new CreditCard();
+      creditCard.setCardNumber(resultSet.getString("card_number"));
+      creditCard.setCardPassword(resultSet.getString("card_password"));
+      creditCard.setBalance(resultSet.getDouble("balance"));
+      System.out.println(creditCard.getCardNumber());
+      return creditCard;
     }
     return null;
   }
+
 
   @Override
   public void setActive(String username) {
@@ -194,4 +215,65 @@ public class UserDaoImpl implements UserDao {
     return i;
   }
 
+  @Override
+  public void updateUser(String username, String password, String email) {
+    try(Connection connection = getConnection()) {
+      connection.setAutoCommit(false);
+      PreparedStatement statement = connection.prepareStatement(UPDATE_USER);
+      try {
+        statement.setString(1, password);
+        statement.setString(2, email);
+        statement.setString(3, username);
+        statement.executeUpdate();
+        connection.commit();
+      } catch (SQLException e) {
+        connection.rollback();
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void setCreditCard(String username, String cardNumber, String cardPassword) {
+    try(Connection connection = getConnection()) {
+      connection.setAutoCommit(false);
+      PreparedStatement statement = connection.prepareStatement(INSERT_CREDIT_CARD);
+      try {
+        statement.setString(1, cardNumber);
+        statement.setString(2, cardPassword);
+        statement.setString(3, username);
+        statement.executeUpdate();
+        connection.commit();
+      } catch (SQLException e) {
+        connection.rollback();
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void updateCreditCardBalance(String cardNumber, double balance) {
+    try(Connection connection = getConnection()) {
+      connection.setAutoCommit(false);
+      PreparedStatement statement = connection.prepareStatement(UPDATE_CARD_BALANCE);
+      try {
+        statement.setDouble(1, balance);
+        statement.setString(2, cardNumber);
+        statement.executeUpdate();
+        connection.commit();
+      } catch (SQLException e) {
+        connection.rollback();
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }

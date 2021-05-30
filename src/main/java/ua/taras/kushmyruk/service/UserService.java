@@ -13,4 +13,8 @@ public interface UserService {
 
   void logoutUser(HttpServletRequest request);
 
+  void changePassword(HttpServletRequest request, HttpServletResponse response);
+
+  void getUser (HttpServletRequest request, HttpServletResponse response);
+
 }

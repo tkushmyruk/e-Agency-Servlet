@@ -36,4 +36,8 @@ public final class Parameters {
   public static final String TOUR_BUY = "tourBuy";
   public static final String USER_LIST = "userList";
   public static final String METHOD = "method";
+  public static final String CARD_NUMBER = "cardNumber";
+  public static final String CARD_PASSWORD = "cardPassword";
+  public static final String REPLENISH = "replenish";
+  public static final String USER_TOURS = "userTours";
 }

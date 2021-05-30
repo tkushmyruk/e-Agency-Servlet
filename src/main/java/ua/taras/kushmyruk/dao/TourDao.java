@@ -18,5 +18,7 @@ public interface TourDao {
 
   boolean setUserForTour(String tourName, String username);
 
+  List<Tour> findAllBoughtToursByUsername (String username);
+
 
 }

@@ -20,7 +20,6 @@ public class AddTourCommand implements Command {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
-    System.out.println("ADD TOUR COMMAND");
     tourService.addTour(request, response);
     return Pages.TOUR_LIST_PAGE;
   }

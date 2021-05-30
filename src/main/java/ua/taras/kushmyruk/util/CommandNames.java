@@ -18,5 +18,11 @@ public final class CommandNames {
   public static final String ADMIN_PROFILE_COMMAND = "adminProfile";
   public static final String USER_LIST_COMMAND = "userList";
   public static final String USER_EDIT_COMMAND = "userEdit";
+  public static final String CHANGE_PASSWORD_COMMAND = "changePassword";
+  public static final String CREDIT_CARD_COMMAND = "creditCard";
+  public static final String ADD_CREDIT_CARD_COMMAND = "addCreditCard";
+  public static final String REDIRECT_ADD_CREDIT_CARD_COMMAND = "redirectAddCreditCard";
+  public static final String REPLENISH_COMMAND = "replenish";
+  public static final String BOUGHT_TOUR_LIST_COMMAND = "boughtTourList";
 
 }

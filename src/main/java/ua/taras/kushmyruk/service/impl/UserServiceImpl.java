@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     String username = request.getParameter(Parameters.USERNAME);
     String password = request.getParameter(Parameters.PASSWORD);
     User userFromDb = userDao.findUserByUsername(username);
-    if(userFromDb != null && userFromDb.getPassword().equals(password)) {
+    if(userFromDb != null && userFromDb.getPassword().equals(password) && userFromDb.isActive()){
       request.getSession().setAttribute(Parameters.USER_AUTH, userFromDb.getUsername());
       request.getSession().setAttribute(Parameters.ROLE, userFromDb.getRole().toString());
       logger.info("User {} successfully signed in", username);
@@ -61,9 +61,22 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void logoutUser(HttpServletRequest request) {
-    System.out.println(request.getSession().getAttribute(Parameters.USER_AUTH));
-    System.out.println("Auth");
     request.getSession().invalidate();
-    System.out.println("After invalidate");
   }
+
+  @Override
+  public void changePassword(HttpServletRequest request, HttpServletResponse response) {
+  String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+  String password = request.getParameter(Parameters.PASSWORD);
+  String email = request.getParameter(Parameters.EMAIL);
+  userDao.updateUser(username, password, email);
+  }
+
+  @Override
+  public void getUser(HttpServletRequest request, HttpServletResponse response) {
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    User user = userDao.findUserByUsername(username);
+    request.setAttribute(Parameters.USER, user);
+  }
+
 }

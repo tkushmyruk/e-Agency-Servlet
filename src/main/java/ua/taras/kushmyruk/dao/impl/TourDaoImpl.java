@@ -43,6 +43,13 @@ public class TourDaoImpl implements TourDao {
       + "INNER JOIN hotel_stars hs ON hs.tour_name = t.tour_name "
       + "WHERE ts.tour_status = 'REGISTERED'";
 
+  private static final String GET_USER_BOUGHT_TORUS = "SELECT * FROM tour t "
+      + "INNER JOIN tour_type tt ON tt.tour_name = t.tour_name "
+      + "INNER JOIN tour_status ts ON ts.tour_name = t.tour_name "
+      + "INNER JOIN room_type rt ON rt.tour_name = t.tour_name "
+      + "INNER JOIN hotel_stars hs ON hs.tour_name = t.tour_name "
+      + "WHERE t.username = ?;";
+
   private static final String GET_TOUR = "SELECT * FROM tour WHERE tour_name = ?;";
 
   private static final String GET_TOUR_TYPE = "SELECT * FROM tour_type WHERE tour_name = ?;";
@@ -97,26 +104,7 @@ public class TourDaoImpl implements TourDao {
     List<Tour> tours = new ArrayList<>();
     try(Connection connection = getConnection();
     PreparedStatement statement = connection.prepareStatement(GET_ALL_NOT_BOUGHT_TOURS)) {
-      ResultSet resultSet = statement.executeQuery();
-      while (resultSet.next()){
-        Tour tour = new Tour();
-        tour.setTourName(resultSet.getString("tour_name"));
-        tour.setPrice(resultSet.getString("price"));
-        tour.setCountOfPeople(resultSet.getInt("count_of_people"));
-        tour.setStartDate(resultSet.getDate("start_date").toLocalDate());
-        tour.setEndDate(resultSet.getDate("end_date").toLocalDate());
-        tour.setDepartingFrom(resultSet.getString("departing_from"));
-        tour.setLocality(resultSet.getString("locality"));
-        tour.setCountry(resultSet.getString("country"));
-        tour.setHotelName(resultSet.getString("hotel_name"));
-        tour.setAllInclusive(resultSet.getBoolean("is_all_inclusive"));
-        tour.setHot(resultSet.getBoolean("is_hot"));
-        tour.setTourType(TourType.valueOf(resultSet.getString("tour_type")));
-        tour.setTourStatus(TourStatus.valueOf(resultSet.getString("tour_status")));
-        tour.setRoomType(RoomType.valueOf(resultSet.getString("room_type")));
-        tour.setHotelStars(HotelStars.valueOf(resultSet.getString("hotel_stars")));
-        tours.add(tour);
-      }
+      getTourList(tours, statement);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -247,5 +235,41 @@ public class TourDaoImpl implements TourDao {
     statement.setString(1, status);
     statement.setString(2, tourName);
     statement.executeUpdate();
+  }
+
+  @Override
+  public List<Tour> findAllBoughtToursByUsername(String username) {
+    List<Tour> tours = new ArrayList<>();
+    try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_USER_BOUGHT_TORUS)) {
+      statement.setString(1, username);
+      getTourList(tours, statement);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return tours;
+  }
+
+  private void getTourList(List<Tour> tours, PreparedStatement statement) throws SQLException {
+    ResultSet resultSet = statement.executeQuery();
+    while (resultSet.next()){
+      Tour tour = new Tour();
+      tour.setTourName(resultSet.getString("tour_name"));
+      tour.setPrice(resultSet.getString("price"));
+      tour.setCountOfPeople(resultSet.getInt("count_of_people"));
+      tour.setStartDate(resultSet.getDate("start_date").toLocalDate());
+      tour.setEndDate(resultSet.getDate("end_date").toLocalDate());
+      tour.setDepartingFrom(resultSet.getString("departing_from"));
+      tour.setLocality(resultSet.getString("locality"));
+      tour.setCountry(resultSet.getString("country"));
+      tour.setHotelName(resultSet.getString("hotel_name"));
+      tour.setAllInclusive(resultSet.getBoolean("is_all_inclusive"));
+      tour.setHot(resultSet.getBoolean("is_hot"));
+      tour.setTourType(TourType.valueOf(resultSet.getString("tour_type")));
+      tour.setTourStatus(TourStatus.valueOf(resultSet.getString("tour_status")));
+      tour.setRoomType(RoomType.valueOf(resultSet.getString("room_type")));
+      tour.setHotelStars(HotelStars.valueOf(resultSet.getString("hotel_stars")));
+      tours.add(tour);
+    }
   }
 }

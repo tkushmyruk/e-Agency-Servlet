@@ -26,8 +26,8 @@ FOREIGN KEY(username) REFERENCES usr(username) ON DELETE RESTRICT
 CREATE TABLE credit_card(
 credit_card_id SERIAL,
 username VARCHAR (30) NOT NULL,
-card_number VARCHAR (19),
-card_password VARCHAR (60),
+card_number VARCHAR UNIQUE (19),
+card_password VARCHAR NOT NULL(60),
 balance DECIMAL,
 PRIMARY KEY (credit_card_id),
 FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT

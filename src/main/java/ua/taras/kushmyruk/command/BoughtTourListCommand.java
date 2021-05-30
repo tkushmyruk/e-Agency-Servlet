@@ -3,20 +3,20 @@ package ua.taras.kushmyruk.command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ua.taras.kushmyruk.exception.AppException;
-import ua.taras.kushmyruk.service.UserService;
+import ua.taras.kushmyruk.service.ProfileService;
 import ua.taras.kushmyruk.util.Pages;
 
-public class UserProfileCommand implements Command {
-  private final UserService userService;
+public class BoughtTourListCommand implements Command {
+  private final ProfileService profileService;
 
-  public UserProfileCommand(UserService userService) {
-    this.userService = userService;
+  public BoughtTourListCommand(ProfileService profileService) {
+    this.profileService = profileService;
   }
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
-    userService.getUser(request, response);
-    return Pages.USER_PROFILE_PAGE;
+    profileService.getUserList(request, response);
+    return Pages.BOUGHT_TOURS_PAGE;
   }
 }

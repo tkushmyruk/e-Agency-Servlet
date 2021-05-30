@@ -1,24 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
-<form action="Agency" method="POST">
+<form action="Agency?command=addCreditCard" method="POST">
     <div><input name="command" value="registration" type="hidden"/></div>
     <div>
         <div>
-            <label><fmt:message key="login" bundle="${bundle}" /></label>
-            <input type="text" id="username" name="username" required />
+            <label><fmt:message key="cardNumber" bundle="${bundle}" /></label>
+            <input type="text" id="cardNumber" name="cardNumber" required />
         </div>
     </div>
     <div>
         <div>
-            <label><fmt:message key="password" bundle="${bundle}" /></label>
-            <input type="password" id="password" name="password" required />
-        </div>
-    </div>
-    <div>
-        <div>
-            <label><fmt:message key="email" bundle="${bundle}" /></label>
-            <input type="email" id="email" name="email" required />
+            <label><fmt:message key="cardPassword" bundle="${bundle}" /></label>
+            <input type="password" id="cardPassword" name="cardPassword" required />
         </div>
     </div>
     <div>
