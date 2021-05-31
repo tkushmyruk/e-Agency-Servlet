@@ -34,7 +34,6 @@ public class UserFilter implements Filter {
     String status = null;
     if (session != null) {
       status = (String) session.getAttribute(Parameters.ROLE);
-      System.out.println(status + "  -  user");
     }
     boolean notAllowedRequest = isNotAllowedRequest(request);
 

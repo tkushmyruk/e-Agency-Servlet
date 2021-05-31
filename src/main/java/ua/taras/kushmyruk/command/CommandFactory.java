@@ -37,6 +37,8 @@ public class CommandFactory {
     commandMap.put(CommandNames.REPLENISH_COMMAND, new ReplenishCardCommand(serviceFactory.getProfileService(), serviceFactory.getUserService()));
     commandMap.put(CommandNames.ADD_CREDIT_CARD_COMMAND, new AddCreditCardCommand(serviceFactory.getProfileService(), serviceFactory.getUserService()));
     commandMap.put(CommandNames.BOUGHT_TOUR_LIST_COMMAND, new BoughtTourListCommand(serviceFactory.getProfileService()));
+    commandMap.put(CommandNames.REDACT_TOUR_COMMAND, new RedactTourCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.RETURN_TOUR_COMMAND, new ReturnTourCommand(serviceFactory.getTourService(), serviceFactory.getUserService()));
   }
 
   private static class CommandFactoryHolder {

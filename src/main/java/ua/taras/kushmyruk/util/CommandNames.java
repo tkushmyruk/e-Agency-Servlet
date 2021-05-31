@@ -24,5 +24,7 @@ public final class CommandNames {
   public static final String REDIRECT_ADD_CREDIT_CARD_COMMAND = "redirectAddCreditCard";
   public static final String REPLENISH_COMMAND = "replenish";
   public static final String BOUGHT_TOUR_LIST_COMMAND = "boughtTourList";
+  public static final String REDACT_TOUR_COMMAND = "redactTour";
+  public static final String RETURN_TOUR_COMMAND = "returnTour";
 
 }

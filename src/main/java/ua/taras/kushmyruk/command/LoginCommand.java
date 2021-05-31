@@ -19,9 +19,7 @@ public class LoginCommand  implements Command{
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
-    System.out.println("Login page");
     userService.loginUser(request, response);
-    System.out.println("After login");
     return Pages.INDEX_PAGE;
   }
 

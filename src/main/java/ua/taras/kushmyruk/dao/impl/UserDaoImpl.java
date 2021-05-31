@@ -36,13 +36,15 @@ public class UserDaoImpl implements UserDao {
   private final String GET_ALL_USERS = "SELECT * FROM usr u INNER JOIN user_role r "
       + "ON u.username = r.username;";
 
+  private final String GET_CREDIT_CARD = "SELECT * FROM credit_card WHERE card_number = ?;";
+
   private final String UPDATE_IS_ACTIVE = "UPDATE usr SET is_active = ? WHERE username = ?;";
 
   private final String UPDATE_USER_ROLE = "UPDATE user_role SET role = ? WHERE username = ?;";
 
   private final String UPDATE_USER = "UPDATE usr SET password = ?, email = ? WHERE username = ?;";
 
-  private final String UPDATE_CARD_BALANCE = "UPDATE credit_card SET balance = ? WHERE card_number = ?;";
+  private final String UPDATE_CARD_BALANCE = "UPDATE credit_card SET balance = ? WHERE username = ?;";
 
 
 
@@ -258,13 +260,13 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public void updateCreditCardBalance(String cardNumber, double balance) {
+  public void updateCreditCardBalance(String username, double balance) {
     try(Connection connection = getConnection()) {
       connection.setAutoCommit(false);
       PreparedStatement statement = connection.prepareStatement(UPDATE_CARD_BALANCE);
       try {
         statement.setDouble(1, balance);
-        statement.setString(2, cardNumber);
+        statement.setString(2, username);
         statement.executeUpdate();
         connection.commit();
       } catch (SQLException e) {
@@ -275,5 +277,25 @@ public class UserDaoImpl implements UserDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public CreditCard findCreditCardByNumber(String cardNumber) {
+    CreditCard creditCard = null;
+    try(Connection connection = getConnection()){
+      PreparedStatement statement = connection.prepareStatement(GET_CREDIT_CARD);
+      statement.setString(1, cardNumber);
+      ResultSet resultSet = statement.executeQuery();
+      resultSet.next();
+      creditCard = new CreditCard();
+      creditCard.setCardNumber(resultSet.getString("card_number"));
+      creditCard.setCardPassword(resultSet.getString("card_password"));
+      creditCard.setBalance(resultSet.getDouble("balance"));
+      return creditCard;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return  creditCard;
   }
 }

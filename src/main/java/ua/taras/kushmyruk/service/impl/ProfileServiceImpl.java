@@ -68,15 +68,14 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public void replenishCard(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println("REPLENISH CARD");
     String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
     String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
     String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
     double balance = Double.valueOf(request.getParameter(Parameters.REPLENISH));
     User user = userDao.findUserByUsername(username);
-    System.out.println(user.getCreditCard().getCardPassword() + " - CARD PASS - " + cardPassword );
     if(user.getCreditCard().getCardPassword().equals(cardPassword)) {
-      System.out.println("IF BLOCK CREDIT CARD");
+      double currentBalance = user.getCreditCard().getBalance();
+      balance += currentBalance;
       userDao.updateCreditCardBalance(cardNumber, balance);
     }
   }

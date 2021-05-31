@@ -13,5 +13,9 @@ public interface TourService {
 
   void buyTour(HttpServletRequest request, HttpServletResponse response);
 
+  void redactTour(HttpServletRequest request, HttpServletResponse response);
+
+  void returnTour(HttpServletRequest request, HttpServletResponse response);
+
 
 }

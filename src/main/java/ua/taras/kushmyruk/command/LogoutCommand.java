@@ -19,9 +19,7 @@ public class LogoutCommand implements Command {
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws AppException {
-    System.out.println("LOGOOUT STARTUYEM");
     LOGGER.info(LoggerMessage.USER_LOGOUT);
-    System.out.println("Logout method");
     userService.logoutUser(request);
     return Pages.INDEX_PAGE;
   }

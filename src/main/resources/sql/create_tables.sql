@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS credit_card;
 DROP TABLE IF EXISTS room_type;
 DROP TABLE IF EXISTS tour_type;
 DROP TABLE IF EXISTS hotel_stars;
@@ -26,8 +27,8 @@ FOREIGN KEY(username) REFERENCES usr(username) ON DELETE RESTRICT
 CREATE TABLE credit_card(
 credit_card_id SERIAL,
 username VARCHAR (30) NOT NULL,
-card_number VARCHAR UNIQUE (19),
-card_password VARCHAR NOT NULL(60),
+card_number VARCHAR(19) UNIQUE,
+card_password VARCHAR(60) NOT NULL,
 balance DECIMAL,
 PRIMARY KEY (credit_card_id),
 FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
@@ -35,7 +36,7 @@ FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
 
 CREATE TABLE tour(
 tour_id SERIAL,
-tour_name varchar(30) UNIQUE ,
+tour_name VARCHAR(30) UNIQUE ,
 count_of_people INT NOT NULL,
 price DECIMAL NOT NULL,
 start_date TIMESTAMP NOT NULL,

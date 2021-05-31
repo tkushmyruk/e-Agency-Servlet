@@ -40,4 +40,5 @@ public final class Parameters {
   public static final String CARD_PASSWORD = "cardPassword";
   public static final String REPLENISH = "replenish";
   public static final String USER_TOURS = "userTours";
+  public static final String REDACT = "redact";
 }

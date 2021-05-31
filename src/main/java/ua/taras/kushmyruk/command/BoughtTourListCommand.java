@@ -16,7 +16,7 @@ public class BoughtTourListCommand implements Command {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws AppException {
-    profileService.getUserList(request, response);
+    profileService.getBoughtTours(request, response);
     return Pages.BOUGHT_TOURS_PAGE;
   }
 }

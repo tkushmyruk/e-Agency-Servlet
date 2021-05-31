@@ -11,7 +11,7 @@ public final class Pages {
   public static final String USER_PROFILE_PAGE = "WEB-INF/jsp/userProfile.jsp";
   public static final String ADMIN_PROFILE_PAGE = "WEB-INF/jsp/adminProfile.jsp";
   public static final String USER_LIST_PAGE = "WEB-INF/jsp/userList.jsp";
-  public static final String ADD_CREDIT_CARD_PAGE = "WEB-INF/jsp/addCreditCard.jsp";
   public static final String CREDIT_CARD_PAGE = "WEB-INF/jsp/creditCard.jsp";
   public static final String BOUGHT_TOURS_PAGE = "WEB-INF/jsp/boughtTours.jsp";
+  public static final String REDACT_TOUR_PAGE = "WEB-INF/jsp/redactTour.jsp";
 }

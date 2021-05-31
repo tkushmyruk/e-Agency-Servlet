@@ -5,13 +5,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ua.taras.kushmyruk.dao.TourDao;
+import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
+import ua.taras.kushmyruk.dao.impl.UserDaoImpl;
 import ua.taras.kushmyruk.model.Tour;
+import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.TourService;
 import ua.taras.kushmyruk.util.Parameters;
 
 public class TourServiceImpl implements TourService {
   private static final TourDao tourDao = new TourDaoImpl();
+  private static final UserDao userDao = new UserDaoImpl();
 
   public TourServiceImpl() {
   }
@@ -61,6 +65,50 @@ public class TourServiceImpl implements TourService {
   public void buyTour(HttpServletRequest request, HttpServletResponse response) {
     String tourName = request.getParameter(Parameters.TOUR_NAME);
     String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
-    boolean user = tourDao.setUserForTour(tourName, username);
+    Tour tour = tourDao.findTourByTourName(tourName);
+    User user = userDao.findUserByUsername(username);
+    double price = Double.valueOf(tour.getPrice());
+    double balanceOnCard = user.getCreditCard().getBalance();
+    if(balanceOnCard - price >= 0) {
+      userDao.updateCreditCardBalance(username, balanceOnCard - price);
+      tourDao.setUserForTour(tourName, username);
+    }
+  }
+
+  @Override
+  public void redactTour(HttpServletRequest request, HttpServletResponse response) {
+    String redact = request.getParameter(Parameters.REDACT);
+    if(redact.equals("true")){
+      System.out.println("if block");
+      String tourName = request.getParameter(Parameters.TOUR_NAME);
+      String price = request.getParameter(Parameters.PRICE);
+      int countOfPeople = Integer.valueOf(request.getParameter(Parameters.COUNT_OF_PEOPLE));
+      LocalDate startDate = LocalDate.parse(request.getParameter(Parameters.START_DATE));
+      LocalDate endDate = LocalDate.parse(request.getParameter(Parameters.END_DATE));
+      String departingFrom = request.getParameter(Parameters.DEPARTING_FROM);
+      String locality = request.getParameter(Parameters.LOCALITY);
+      String country = request.getParameter(Parameters.COUNTRY);
+      String hotelName = request.getParameter(Parameters.HOTEL_NAME);
+      String tourType = request.getParameter(Parameters.TOUR_TYPE);
+      String roomType = request.getParameter(Parameters.ROOM_TYPE);
+      String hotelStars = request.getParameter(Parameters.HOTEL_STARS);
+      boolean isAllInclusive = request.getParameter(Parameters.IS_ALL_INCLUSIVE) != null;
+      boolean isHot = request.getParameter(Parameters.IS_HOT) != null;
+      tourDao.updateTour(tourName, countOfPeople, price,  startDate, endDate, departingFrom, country, locality,
+           tourType, roomType, hotelStars, hotelName, isAllInclusive, isHot);
+    }
+  }
+
+  @Override
+  public void returnTour(HttpServletRequest request, HttpServletResponse response) {
+    String tourName = request.getParameter(Parameters.TOUR_NAME);
+    String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
+    Tour tour = tourDao.findTourByTourName(tourName);
+    User user = userDao.findUserByUsername(username);
+    double price = Double.valueOf(tour.getPrice());
+    double balanceOnCard = user.getCreditCard().getBalance();
+    balanceOnCard += price;
+    userDao.updateCreditCardBalance(username, balanceOnCard);
+    tourDao.returnTour(tourName);
   }
 }
