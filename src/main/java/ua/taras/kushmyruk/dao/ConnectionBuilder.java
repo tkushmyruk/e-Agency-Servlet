@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import ua.taras.kushmyruk.config.DaoConfig;
 
 public class ConnectionBuilder {
+
   public static Connection getConnection() throws SQLException {
     try {
       Class.forName("org.postgresql.Driver");
@@ -13,9 +14,9 @@ public class ConnectionBuilder {
       e.printStackTrace();
     }
     Connection connection = DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5433/ser_agency",
-        "roman",
-        "kalipso231094");
+        DaoConfig.getProperty(DaoConfig.DB_URL),
+        DaoConfig.getProperty(DaoConfig.DB_LOGIN),
+        DaoConfig.getProperty(DaoConfig.DB_PASSWORD));
     return connection;
   }
 }
