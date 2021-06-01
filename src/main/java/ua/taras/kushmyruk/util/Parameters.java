@@ -15,7 +15,6 @@ public final class Parameters {
   public static final String USER = "user";
   public static final String PATH_PREFIX = "WEB-INF/jsp/";
   public static final String PATH_SUFFIX = ".jsp";
-  public static final String ADMIN_PARAM = "admin";
   public static final String TOUR_NAME = "tourName";
   public static final String PRICE = "price";
   public static final String COUNT_OF_PEOPLE = "countOfPeople";
@@ -26,14 +25,12 @@ public final class Parameters {
   public static final String COUNTRY = "country";
   public static final String HOTEL_NAME = "hotelName";
   public static final String TOUR_TYPE = "tourType";
-  public static final String TOUR_STATUS = "tourStatus";
   public static final String ROOM_TYPE = "roomType";
   public static final String HOTEL_STARS = "hotelStars";
   public static final String IS_ALL_INCLUSIVE = "isAllInclusive";
   public static final String IS_HOT = "isHot";
   public static final String NOT_BOUGHT_TOURS = "notBoughtTours";
   public static final String TOUR = "tour";
-  public static final String TOUR_BUY = "tourBuy";
   public static final String USER_LIST = "userList";
   public static final String METHOD = "method";
   public static final String CARD_NUMBER = "cardNumber";
@@ -41,4 +38,6 @@ public final class Parameters {
   public static final String REPLENISH = "replenish";
   public static final String USER_TOURS = "userTours";
   public static final String REDACT = "redact";
+  public static final String SORT_TYPE = "sortType";
+  public static final String DIRECTION = "direction";
 }

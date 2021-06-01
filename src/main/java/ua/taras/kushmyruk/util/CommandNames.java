@@ -26,5 +26,6 @@ public final class CommandNames {
   public static final String BOUGHT_TOUR_LIST_COMMAND = "boughtTourList";
   public static final String REDACT_TOUR_COMMAND = "redactTour";
   public static final String RETURN_TOUR_COMMAND = "returnTour";
+  public static final String SORTING_COMMAND = "sorting";
 
 }

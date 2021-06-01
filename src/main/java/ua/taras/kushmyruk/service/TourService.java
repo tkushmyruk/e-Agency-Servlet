@@ -17,5 +17,9 @@ public interface TourService {
 
   void returnTour(HttpServletRequest request, HttpServletResponse response);
 
+  void getSortedListOfTours(HttpServletRequest request, HttpServletResponse response);
+
+  void cancelTour(HttpServletRequest request, HttpServletResponse response);
+
 
 }
