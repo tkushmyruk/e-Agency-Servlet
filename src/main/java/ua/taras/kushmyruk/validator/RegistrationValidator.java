@@ -9,13 +9,13 @@ public class RegistrationValidator {
   private static final String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
   public void validateCredentrials(String username, String password, String email) {
-    if (username == null || username.trim() == "") {
+    if (username == null || username.trim().equals("")) {
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.USERNAME_EMPTY_ERROR));
     }
-    if (password == null || password.trim() == "") {
+    if (password == null || password.trim().equals("")) {
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.PASSWORD_EMPTY_ERROR));
     }
-    if (email == null || email.trim() == "") {
+    if (email == null || email.trim().equals("")) {
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.EMAIL_EMPTY_ERROR));
     }
     boolean pattern = Pattern.matches(emailRegex, email);

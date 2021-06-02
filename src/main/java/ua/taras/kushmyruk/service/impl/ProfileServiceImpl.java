@@ -7,13 +7,16 @@ import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
 import ua.taras.kushmyruk.dao.impl.UserDaoImpl;
+import ua.taras.kushmyruk.model.CreditCard;
 import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.ProfileService;
 import ua.taras.kushmyruk.util.Pages;
 import ua.taras.kushmyruk.util.Parameters;
+import ua.taras.kushmyruk.validator.CreditCardValidation;
 
 public class ProfileServiceImpl implements ProfileService {
+  private static CreditCardValidation creditCardValidation = new CreditCardValidation();
   private static final UserDao userDao = new UserDaoImpl();
   private static final TourDao tourDao = new TourDaoImpl();
 
@@ -63,6 +66,8 @@ public class ProfileServiceImpl implements ProfileService {
     String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
     String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
     String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
+    User user = userDao.findUserByUsername(username);
+    creditCardValidation.validateCreditCard(user, cardNumber, cardPassword);
     userDao.setCreditCard(username, cardNumber, cardPassword);
   }
 
@@ -71,8 +76,10 @@ public class ProfileServiceImpl implements ProfileService {
     String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
     String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
     String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
-    double balance = Double.valueOf(request.getParameter(Parameters.REPLENISH));
+    String balanceFromRequest = request.getParameter(Parameters.REPLENISH);
     User user = userDao.findUserByUsername(username);
+    creditCardValidation.validateReplenishCard(user, cardPassword, balanceFromRequest);
+    double balance = Double.valueOf(balanceFromRequest);
     if(user.getCreditCard().getCardPassword().equals(cardPassword)) {
       double currentBalance = user.getCreditCard().getBalance();
       balance += currentBalance;

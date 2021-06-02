@@ -14,7 +14,6 @@ import ua.taras.kushmyruk.exception.DaoException;
 import ua.taras.kushmyruk.model.CreditCard;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.model.UserRole;
-import ua.taras.kushmyruk.util.ExceptionMessage;
 
 public class UserDaoImpl implements UserDao {
   private final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);

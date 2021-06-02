@@ -7,10 +7,10 @@ import ua.taras.kushmyruk.util.ExceptionMessage;
 public class LoginValidator {
 
   public void validateEmptyCredentials(String username, String password){
-    if(username == null || username.trim() == ""){
+    if(username == null || username.trim().equals("")){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.USERNAME_EMPTY_ERROR));
     }
-    if(password == null || password.trim() == ""){
+    if(password == null || password.trim().equals("")){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.PASSWORD_EMPTY_ERROR));
     }
   }
