@@ -14,6 +14,7 @@ import ua.taras.kushmyruk.exception.DaoException;
 import ua.taras.kushmyruk.model.CreditCard;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.model.UserRole;
+import ua.taras.kushmyruk.util.ExceptionMessage;
 
 public class UserDaoImpl implements UserDao {
   private final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
@@ -142,16 +143,12 @@ public class UserDaoImpl implements UserDao {
       connection.setAutoCommit(false);
       PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ROLE);
       try {
-        System.out.println("change role!");
-        System.out.println(username + " " + username);
         statement.setString(1, userRole);
         statement.setString(2, username);
         int i = statement.executeUpdate();
-        System.out.println(i);
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        System.out.println(e.getMessage());
         e.printStackTrace();
       }
     } catch (SQLException e) {

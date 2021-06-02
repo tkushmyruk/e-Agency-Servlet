@@ -12,10 +12,12 @@ import ua.taras.kushmyruk.model.UserRole;
 import ua.taras.kushmyruk.service.UserService;
 import ua.taras.kushmyruk.util.Parameters;
 import ua.taras.kushmyruk.validator.LoginValidator;
+import ua.taras.kushmyruk.validator.RegistrationValidator;
 
 public class UserServiceImpl implements UserService {
   private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-  private static LoginValidator validator = new LoginValidator();
+  private static LoginValidator loginValidator = new LoginValidator();
+  private static RegistrationValidator registrationValidator = new RegistrationValidator();
   private static UserDao userDao = new UserDaoImpl();
 
   public UserServiceImpl() {
@@ -33,9 +35,9 @@ public class UserServiceImpl implements UserService {
   public void loginUser(HttpServletRequest request, HttpServletResponse response) {
     String username = request.getParameter(Parameters.USERNAME);
     String password = request.getParameter(Parameters.PASSWORD);
-    validator.validateEmptyCredentials(username, password);
+    loginValidator.validateEmptyCredentials(username, password);
     User userFromDb = userDao.findUserByUsername(username);
-    validator.validateUser(userFromDb, password);
+    loginValidator.validateUser(userFromDb, password);
     if(userFromDb != null && userFromDb.getPassword().equals(password) && userFromDb.isActive()){
       request.getSession().setAttribute(Parameters.USER_AUTH, userFromDb.getUsername());
       request.getSession().setAttribute(Parameters.ROLE, userFromDb.getRole().toString());
@@ -48,6 +50,9 @@ public class UserServiceImpl implements UserService {
    String username = request.getParameter(Parameters.USERNAME);
    String password = request.getParameter(Parameters.PASSWORD);
    String email = request.getParameter(Parameters.EMAIL);
+   registrationValidator.validateCredentrials(username, password, email);
+   User userFromDb = userDao.findUserByUsername(username);
+   registrationValidator.validateIfUserExists(userFromDb);
    User user = new User();
    user.setUsername(username);
    user.setPassword(password);
@@ -73,6 +78,7 @@ public class UserServiceImpl implements UserService {
   String username = (String) request.getSession().getAttribute(Parameters.USER_AUTH);
   String password = request.getParameter(Parameters.PASSWORD);
   String email = request.getParameter(Parameters.EMAIL);
+  registrationValidator.validateCredentrials(username, password, email);
   userDao.updateUser(username, password, email);
   }
 
