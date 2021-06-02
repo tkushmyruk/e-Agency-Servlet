@@ -21,7 +21,24 @@ public class LoginFilter implements Filter {
 
   @Override
   public void init(FilterConfig fc) throws ServletException {
-
+    notAllowedActions.add(CommandNames.USER_EDIT_COMMAND);
+    notAllowedActions.add(CommandNames.USER_LIST_COMMAND);
+    notAllowedActions.add(CommandNames.USER_PROFILE_COMMAND);
+    notAllowedActions.add(CommandNames.ADMIN_PROFILE_COMMAND);
+    notAllowedActions.add(CommandNames.TOUR_INFO_COMMAND);
+    notAllowedActions.add(CommandNames.TOUR_LIST_COMMAND);
+    notAllowedActions.add(CommandNames.REDIRECT_ADD_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.REDACT_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.ADD_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.BOUGHT_TOUR_LIST_COMMAND);
+    notAllowedActions.add(CommandNames.BUY_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.RETURN_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.REDIRECT_ADD_CREDIT_CARD_COMMAND);
+    notAllowedActions.add(CommandNames.ADD_CREDIT_CARD_COMMAND);
+    notAllowedActions.add(CommandNames.CREDIT_CARD_COMMAND);
+    notAllowedActions.add(CommandNames.REPLENISH_COMMAND);
+    notAllowedActions.add(CommandNames.CHANGE_PASSWORD_COMMAND);
+    notAllowedActions.add(CommandNames.SORTING_COMMAND);
   }
 
   @Override

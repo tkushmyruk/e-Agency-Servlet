@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import ua.taras.kushmyruk.command.Command;
 import ua.taras.kushmyruk.model.UserRole;
 import ua.taras.kushmyruk.util.CommandNames;
 import ua.taras.kushmyruk.util.Pages;
@@ -23,7 +24,12 @@ public class UserFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     notAllowedActions.add(CommandNames.LOGIN_COMMAND);
-
+    notAllowedActions.add(CommandNames.ADMIN_PROFILE_COMMAND);
+    notAllowedActions.add(CommandNames.ADD_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.REDACT_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.REDIRECT_ADD_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.USER_LIST_COMMAND);
+    notAllowedActions.add(CommandNames.USER_EDIT_COMMAND);
   }
 
   @Override

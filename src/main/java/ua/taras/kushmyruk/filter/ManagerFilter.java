@@ -23,7 +23,12 @@ public class ManagerFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     notAllowedActions.add(CommandNames.LOGIN_COMMAND);
-
+    notAllowedActions.add(CommandNames.USER_PROFILE_COMMAND);
+    notAllowedActions.add(CommandNames.CREDIT_CARD_COMMAND);
+    notAllowedActions.add(CommandNames.ADD_CREDIT_CARD_COMMAND);
+    notAllowedActions.add(CommandNames.BUY_TOUR_COMMAND);
+    notAllowedActions.add(CommandNames.BOUGHT_TOUR_LIST_COMMAND);
+    notAllowedActions.add(CommandNames.REPLENISH_COMMAND);
   }
 
   @Override

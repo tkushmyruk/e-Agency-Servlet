@@ -73,7 +73,6 @@ public class UserDaoImpl implements UserDao {
 
     } catch (SQLException e) {
       logger.error(e.getMessage());
-      System.out.println(e.getMessage());
     }
     return null;
   }

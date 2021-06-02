@@ -225,4 +225,9 @@ public class TourServiceImpl implements TourService {
       request.setAttribute(Parameters.NOT_BOUGHT_TOURS, allTours);
     }
   }
+
+  @Override
+  public void cancelTour(HttpServletRequest request, HttpServletResponse response) {
+
+  }
 }

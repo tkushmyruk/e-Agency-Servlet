@@ -11,9 +11,11 @@ import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.model.UserRole;
 import ua.taras.kushmyruk.service.UserService;
 import ua.taras.kushmyruk.util.Parameters;
+import ua.taras.kushmyruk.validator.LoginValidator;
 
 public class UserServiceImpl implements UserService {
   private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+  private static LoginValidator validator = new LoginValidator();
   private static UserDao userDao = new UserDaoImpl();
 
   public UserServiceImpl() {
