@@ -33,7 +33,9 @@ public class UserServiceImpl implements UserService {
   public void loginUser(HttpServletRequest request, HttpServletResponse response) {
     String username = request.getParameter(Parameters.USERNAME);
     String password = request.getParameter(Parameters.PASSWORD);
+    validator.validateEmptyCredentials(username, password);
     User userFromDb = userDao.findUserByUsername(username);
+    validator.validateUser(userFromDb, password);
     if(userFromDb != null && userFromDb.getPassword().equals(password) && userFromDb.isActive()){
       request.getSession().setAttribute(Parameters.USER_AUTH, userFromDb.getUsername());
       request.getSession().setAttribute(Parameters.ROLE, userFromDb.getRole().toString());

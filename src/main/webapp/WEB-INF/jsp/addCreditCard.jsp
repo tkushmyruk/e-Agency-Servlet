@@ -2,6 +2,7 @@
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 <form action="Agency?command=addCreditCard" method="POST">
+    <label class="error" for=""><c:out value="${exception}"/></label>
     <div><input name="command" value="registration" type="hidden"/></div>
     <div>
         <div>

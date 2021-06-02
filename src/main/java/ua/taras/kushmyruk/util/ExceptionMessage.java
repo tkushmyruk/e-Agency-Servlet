@@ -8,6 +8,8 @@ public final class ExceptionMessage {
   public static final String ERROR_PAGE = "Error page found ";
   public static final String USERNAME_EMPTY_ERROR = "usernameEmptyError";
   public static final String PASSWORD_EMPTY_ERROR = "passwordEmptyError";
+  public static final String WRONG_PASSWORD_ERROR = "wrongPasswordError";
+  public static final String USER_BLOCKED_ERROR = "userBlockedError";
   public static final String EMAIL_EMPTY_ERROR = "emailEmptyError";
   public static final String EMAIL_PATTERN_ERROR = "emailPatternError";
 

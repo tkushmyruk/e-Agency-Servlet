@@ -2,7 +2,6 @@
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 <form action="Agency" method="POST">
-    <label class="registration" for=""><c:out value="${successRegistration}"/></label>
     <label class="error" for=""><c:out value="${exception}"/></label>
     <div><input name="command" value="login" type="hidden"/></div>
     <div>

@@ -7,6 +7,7 @@ import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.exception.AppException;
 import ua.taras.kushmyruk.service.UserService;
 import ua.taras.kushmyruk.util.Pages;
+import ua.taras.kushmyruk.util.Parameters;
 
 public class LoginCommand  implements Command{
   private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
@@ -25,6 +26,7 @@ public class LoginCommand  implements Command{
 
   @Override
   public String doOnError(HttpServletRequest request, Exception e) throws AppException {
-    return Pages.ERROR_PAGE;
+    request.setAttribute(Parameters.EXCEPTION, e.getMessage());
+    return Pages.LOGIN_PAGE;
   }
 }

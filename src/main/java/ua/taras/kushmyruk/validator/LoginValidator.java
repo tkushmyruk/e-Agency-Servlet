@@ -6,19 +6,21 @@ import ua.taras.kushmyruk.util.ExceptionMessage;
 
 public class LoginValidator {
 
-  public void validateLogin(String username, String password){
+  public void validateEmptyCredentials(String username, String password){
     if(username == null || username.trim() == ""){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.USERNAME_EMPTY_ERROR));
     }
     if(password == null || password.trim() == ""){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.PASSWORD_EMPTY_ERROR));
     }
-
   }
 
-  public void validatePassword(String username, String password, String email, User user){
-
+  public void validateUser(User user, String password){
+    if(!user.getPassword().equals(password)){
+      throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.WRONG_PASSWORD_ERROR));
+    }
+    if(!user.isActive()){
+      throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.USER_BLOCKED_ERROR));
+    }
   }
-
-
 }
