@@ -7,11 +7,9 @@ import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
 import ua.taras.kushmyruk.dao.impl.UserDaoImpl;
-import ua.taras.kushmyruk.model.CreditCard;
 import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.ProfileService;
-import ua.taras.kushmyruk.util.Pages;
 import ua.taras.kushmyruk.util.Parameters;
 import ua.taras.kushmyruk.validator.CreditCardValidation;
 

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="ct" uri="custom" %>
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 <div>TOUR INFO</div>
@@ -26,8 +27,8 @@
 <div><fmt:message key="niceTime" bundle="${bundle}" /> ${tour.getHotelName()} <fmt:message key="hotelWith" bundle="${bundle}" />
     ${tour.getHotelStars().toString()}  <fmt:message key="stars" bundle="${bundle}" />
 ${tour.getRoomType().toString()} <fmt:message key="class" bundle="${bundle}" /></div>
-<div><fmt:message key="tripStart" bundle="${bundle}" /> ${tour.getStartDate().toString()}
-    <fmt:message key="tripEnd" bundle="${bundle}" />${tour.getEndDate().toString()}</div>
+<div><fmt:message key="tripStart" bundle="${bundle}" /> <ct:formatDate date="${tour.getStartDate().toString()}" pattern="EEE, MMM d, ''yy"/>
+    <fmt:message key="tripEnd" bundle="${bundle}" /> <ct:formatDate date="${tour.getStartDate()}" pattern="EEE, MMM d, ''yy"/></div>
 <div><fmt:message key="plane" bundle="${bundle}" /> ${tour.getDepartingFrom()}</div>
 <c:if test="${tour.isAllInclusive()}">
 <div><fmt:message key="allInclusive" bundle="${bundle}" /></div>
@@ -48,5 +49,6 @@ ${tour.getRoomType().toString()} <fmt:message key="class" bundle="${bundle}" /><
         <button type="submit"><fmt:message key="buy" bundle="${bundle}" /></button>
     </form>
 </div>
+    <label><c:out value="${exception}"/></label>
 </c:if>
 </body>

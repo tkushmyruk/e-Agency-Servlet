@@ -1,20 +1,22 @@
-2021-06-02 15:59:26 INFO  CommandFactory:55
+2021-06-03 10:01:09 INFO  CommandFactory:55
  - command null
-2021-06-02 15:59:28 INFO  CommandFactory:55
+2021-06-03 10:01:11 INFO  CommandFactory:55
  - command null
-2021-06-02 15:59:28 INFO  CommandFactory:55
+2021-06-03 10:01:12 INFO  CommandFactory:55
  - command null
-2021-06-02 15:59:30 INFO  CommandFactory:55
- - command redirectRegistration
-2021-06-02 15:59:30 INFO  CommandFactory:55
+2021-06-03 10:01:15 INFO  CommandFactory:55
+ - command redirectLogin
+2021-06-03 10:01:15 INFO  CommandFactory:55
  - command null
-2021-06-02 15:59:41 INFO  CommandFactory:55
- - command registration
-2021-06-02 15:59:42 ERROR RegistrationCommand:28
- - User with this username already exists
-2021-06-02 15:59:42 INFO  CommandFactory:55
+2021-06-03 10:01:18 INFO  CommandFactory:55
+ - command login
+2021-06-03 10:01:18 INFO  CommandFactory:55
  - command null
-2021-06-02 16:00:10 INFO  CommandFactory:55
- - command registration
-2021-06-02 16:00:10 INFO  CommandFactory:55
+2021-06-03 10:01:19 INFO  CommandFactory:55
+ - command tourList
+2021-06-03 10:01:20 INFO  CommandFactory:55
+ - command null
+2021-06-03 10:01:21 INFO  CommandFactory:55
+ - command tourInfo
+2021-06-03 10:01:22 INFO  CommandFactory:55
  - command null
