@@ -88,8 +88,7 @@ public class TourDaoImpl implements TourDao {
     PreparedStatement statement = connection.prepareStatement(GET_TOUR)) {
       statement.setString(1, tourName);
       ResultSet resultSet = statement.executeQuery();
-      boolean next = resultSet.next();
-      System.out.println("result set - " + next);
+      resultSet.next();
       tour = new Tour();
       tour.setTourName(resultSet.getString("tour_name"));
       tour.setPrice(resultSet.getString("price"));

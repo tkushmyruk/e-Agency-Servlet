@@ -18,8 +18,10 @@ import ua.taras.kushmyruk.service.TourService;
 import ua.taras.kushmyruk.service.serviceUtil.TourCountOfPeopleComparator;
 import ua.taras.kushmyruk.service.serviceUtil.TourPriceComparator;
 import ua.taras.kushmyruk.util.Parameters;
+import ua.taras.kushmyruk.validator.TourValidator;
 
 public class TourServiceImpl implements TourService {
+  private static final TourValidator tourValidator = new TourValidator();
   private static final TourDao tourDao = new TourDaoImpl();
   private static final UserDao userDao = new UserDaoImpl();
 
@@ -57,6 +59,8 @@ public class TourServiceImpl implements TourService {
     String departingFrom = request.getParameter(Parameters.DEPARTING_FROM);
     String locality = request.getParameter(Parameters.LOCALITY);
     String country = request.getParameter(Parameters.COUNTRY);
+    tourValidator.validateTourInformation(tourName, countOfPeople, price, startDate, endDate, departingFrom,
+        country, locality);
     String hotelName = request.getParameter(Parameters.HOTEL_NAME);
     String tourType = request.getParameter(Parameters.TOUR_TYPE);
     String roomType = request.getParameter(Parameters.ROOM_TYPE);
@@ -75,17 +79,15 @@ public class TourServiceImpl implements TourService {
     User user = userDao.findUserByUsername(username);
     double price = Double.valueOf(tour.getPrice());
     double balanceOnCard = user.getCreditCard().getBalance();
-    if(balanceOnCard - price >= 0) {
-      userDao.updateCreditCardBalance(username, balanceOnCard - price);
-      tourDao.setUserForTour(tourName, username);
-    }
+    tourValidator.validateBuyingTour(balanceOnCard, price);
+    userDao.updateCreditCardBalance(username, balanceOnCard - price);
+    tourDao.setUserForTour(tourName, username);
   }
 
   @Override
   public void redactTour(HttpServletRequest request, HttpServletResponse response) {
     String redact = request.getParameter(Parameters.REDACT);
     if(redact.equals("true")){
-      System.out.println("if block");
       String tourName = request.getParameter(Parameters.TOUR_NAME);
       String price = request.getParameter(Parameters.PRICE);
       int countOfPeople = Integer.valueOf(request.getParameter(Parameters.COUNT_OF_PEOPLE));
@@ -94,6 +96,8 @@ public class TourServiceImpl implements TourService {
       String departingFrom = request.getParameter(Parameters.DEPARTING_FROM);
       String locality = request.getParameter(Parameters.LOCALITY);
       String country = request.getParameter(Parameters.COUNTRY);
+      tourValidator.validateTourInformation(tourName, countOfPeople, price, startDate, endDate, departingFrom,
+          country, locality);
       String hotelName = request.getParameter(Parameters.HOTEL_NAME);
       String tourType = request.getParameter(Parameters.TOUR_TYPE);
       String roomType = request.getParameter(Parameters.ROOM_TYPE);

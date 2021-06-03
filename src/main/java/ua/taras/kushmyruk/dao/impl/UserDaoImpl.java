@@ -108,7 +108,6 @@ public class UserDaoImpl implements UserDao {
       } catch (SQLException e) {
         connection.rollback();
         e.printStackTrace();
-        System.out.println(e.getMessage());
       }
     } catch (SQLException e) {
       e.printStackTrace();

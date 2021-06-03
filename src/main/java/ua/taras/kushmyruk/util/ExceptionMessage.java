@@ -19,6 +19,17 @@ public final class ExceptionMessage {
   public static final String CARD_NUMBER_PATTERN_ERROR = "cardNumberPatternError";
   public static final String NOT_CORRECT_CARD_PASSWORD_ERROR = "notCorrectCardPasswordError";
   public static final String BALANCE_EMPTY_ERROR = "balanceEmptyError";
+  public static final String TOUR_NAME_EMPTY_ERROR = "tourNameEmptyError";
+  public static final String COUNT_OF_PEOPLE_EMPTY_ERROR = "countOfPeopleEmptyError";
+  public static final String PRICE_EMPTY_ERROR = "priceEmptyError";
+  public static final String START_DATE_EMPTY_ERROR = "startDateEmptyError";
+  public static final String START_DATE_BEFORE_NOW_ERROR = "startDateBeforeNowError";
+  public static final String END_DATE_EMPTY_ERROR = "endDateEmptyError";
+  public static final String END_DATE_BEFORE_START_DATE_ERROR = "endDateBeforeStartDateError";
+  public static final String DEPARTING_FROM_EMPTY_ERROR = "departingFromEmptyError";
+  public static final String COUNTRY_EMPTY_ERROR = "countryEmptyError";
+  public static final String LOCALITY_EMPTY_ERROR = "localityEmptyError";
+  public static final String NOT_ENOUGH_MONEY_ERROR = "notEnoughMoneyError";
 
   public static final Locale ENGLISH = new Locale("en", "US");
   public static final Locale UKRAINIAN = new Locale("uk", "UA");
