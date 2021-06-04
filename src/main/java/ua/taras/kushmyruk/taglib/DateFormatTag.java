@@ -30,7 +30,7 @@ public class DateFormatTag extends TagSupport {
     try {
       pageContext.getOut().write(formattedDate);
     } catch (Exception e) {
-      LOGGER.error(LoggerMessage.EXCEPTION_MESSAGE);
+      LOGGER.error(LoggerMessage.DATE_FORMAT_TAG_ERROR);
     }
     return SKIP_BODY;
   }
