@@ -232,6 +232,7 @@ public class TourServiceImpl implements TourService {
 
   @Override
   public void cancelTour(HttpServletRequest request, HttpServletResponse response) {
-
+    String tourName = request.getParameter(Parameters.TOUR_NAME);
+    tourDao.deleteTour(tourName);
   }
 }

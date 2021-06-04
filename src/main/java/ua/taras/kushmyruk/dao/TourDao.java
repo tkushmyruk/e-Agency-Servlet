@@ -7,7 +7,7 @@ import ua.taras.kushmyruk.model.User;
 
 public interface TourDao {
 
-  void saveTour(String tourName, int countOfPeople, String price,
+  boolean saveTour(String tourName, int countOfPeople, String price,
       LocalDate startDate, LocalDate endDate, String departingFrom, String country, String locality,
       String tourType, String roomType, String hotelStars, String hotelName,
       boolean isAllInclusive, boolean isHot);
@@ -20,12 +20,14 @@ public interface TourDao {
 
   List<Tour> findAllBoughtToursByUsername (String username);
 
-  void updateTour(String tourName, int countOfPeople, String price,
+  boolean updateTour(String tourName, int countOfPeople, String price,
       LocalDate startDate, LocalDate endDate, String departingFrom, String country, String locality,
       String tourType, String roomType, String hotelStars, String hotelName,
       boolean isAllInclusive, boolean isHot);
 
-  void returnTour(String tourName);
+  boolean returnTour(String tourName);
+
+  boolean deleteTour(String tourName);
 
 
 }

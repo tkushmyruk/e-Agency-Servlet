@@ -49,7 +49,7 @@
             </a>
         </div>
         <div>
-            <form method="post" action="/Agency">
+            <form method="post" action="/Agency?command=cancelTour&tourName=${tour.getTourName()}">
                 <button type="submit"><fmt:message key="cancel" bundle="${bundle}"/></button>
             </form>
         </div>

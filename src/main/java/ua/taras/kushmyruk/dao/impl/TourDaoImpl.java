@@ -76,6 +76,7 @@ public class TourDaoImpl implements TourDao {
 
   private static final String UPDATE_HOTEL_STARS = "UPDATE hotel_stars SET hotel_stars = ? WHERE tour_name = ?";
 
+  private static final String DELETE_TOUR = "DELETE tour WHERE tour_name  = ?;";
 
   private Connection getConnection() throws SQLException {
     return ConnectionBuilder.getConnection();
@@ -154,7 +155,7 @@ public class TourDaoImpl implements TourDao {
   }
 
   @Override
-  public void saveTour(String tourName, int countOfPeople, String price,
+  public boolean saveTour(String tourName, int countOfPeople, String price,
       LocalDate startDate, LocalDate endDate, String departingFrom, String country, String locality,
       String tourType, String roomType, String hotelStars, String hotelName,
       boolean isAllInclusive, boolean isHot) {
@@ -180,6 +181,7 @@ public class TourDaoImpl implements TourDao {
         saveRoomType(connection, tourName, roomType);
         saveHotelStars(connection, tourName, hotelStars);
         connection.commit();
+        return true;
       } catch (SQLException e) {
         connection.rollback();
         e.printStackTrace();
@@ -188,6 +190,7 @@ public class TourDaoImpl implements TourDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return false;
   }
 
   private void saveTourType(Connection connection, String tourName, String tourType) throws SQLException {
@@ -242,12 +245,13 @@ public class TourDaoImpl implements TourDao {
     return result;
   }
 
-  private void updateTourStatus(String tourName, String status, Connection connection)
+  private boolean updateTourStatus(String tourName, String status, Connection connection)
       throws SQLException {
     PreparedStatement statement = connection.prepareStatement(UPDATE_TOUR_STATUS);
     statement.setString(1, status);
     statement.setString(2, tourName);
-    statement.executeUpdate();
+    int executeUpdate = statement.executeUpdate();
+    return executeUpdate >= 0;
   }
 
   @Override
@@ -287,7 +291,7 @@ public class TourDaoImpl implements TourDao {
   }
 
   @Override
-  public void updateTour(String tourName ,int countOfPeople, String price, LocalDate startDate, LocalDate endDate,
+  public  boolean updateTour(String tourName ,int countOfPeople, String price, LocalDate startDate, LocalDate endDate,
       String departingFrom, String country, String locality, String tourType, String roomType,
       String hotelStars, String hotelName, boolean isAllInclusive, boolean isHot) {
     try(Connection connection = getConnection()) {
@@ -310,6 +314,7 @@ public class TourDaoImpl implements TourDao {
         updateRoomType(connection, tourName, roomType);
         updateHotelStars(connection, tourName, hotelStars);
         connection.commit();
+        return true;
       } catch (SQLException e) {
         System.out.println(e.getMessage());
         connection.rollback();
@@ -319,6 +324,7 @@ public class TourDaoImpl implements TourDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return false;
   }
 
   private void updateTourType(Connection connection, String tourName, String tourType) throws SQLException {
@@ -343,7 +349,7 @@ public class TourDaoImpl implements TourDao {
   }
 
   @Override
-  public void returnTour(String tourName) {
+  public boolean returnTour(String tourName) {
     try(Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(SET_USER_FOR_TOUR)) {
       connection.setAutoCommit(false);
@@ -353,6 +359,7 @@ public class TourDaoImpl implements TourDao {
         statement.executeUpdate();
         updateTourStatus(tourName, "REGISTERED", connection);
         connection.commit();
+        return true;
       } catch (Exception e) {
         connection.rollback();
         e.printStackTrace();
@@ -361,6 +368,28 @@ public class TourDaoImpl implements TourDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return false;
   }
 
+  @Override
+  public boolean deleteTour(String tourName) {
+    try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(DELETE_TOUR)) {
+      connection.setAutoCommit(false);
+      try {
+        statement.setString(1, tourName);
+        statement.executeUpdate();
+        updateTourStatus(tourName, "CANCELED", connection);
+        connection.commit();
+        return true;
+      } catch (Exception e) {
+        connection.rollback();
+        e.printStackTrace();
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 }

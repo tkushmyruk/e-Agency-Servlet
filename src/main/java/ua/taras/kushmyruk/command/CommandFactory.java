@@ -40,6 +40,7 @@ public class CommandFactory {
     commandMap.put(CommandNames.REDACT_TOUR_COMMAND, new RedactTourCommand(serviceFactory.getTourService()));
     commandMap.put(CommandNames.RETURN_TOUR_COMMAND, new ReturnTourCommand(serviceFactory.getTourService(), serviceFactory.getUserService()));
     commandMap.put(CommandNames.SORTING_COMMAND, new SortingCommand(serviceFactory.getTourService()));
+    commandMap.put(CommandNames.CANCEL_TOUR_COMMAND, new CancelTourCommand(serviceFactory.getTourService()));
   }
 
   private static class CommandFactoryHolder {
