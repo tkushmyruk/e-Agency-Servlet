@@ -11,7 +11,7 @@ public class TourValidator {
     if(tourName == null || tourName.trim().equals("")){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.TOUR_NAME_EMPTY_ERROR));
     }
-    if(countOfPeople != 0){
+    if(countOfPeople == 0){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.COUNT_OF_PEOPLE_EMPTY_ERROR));
     }
     if(price == null || price.trim().equals("")){

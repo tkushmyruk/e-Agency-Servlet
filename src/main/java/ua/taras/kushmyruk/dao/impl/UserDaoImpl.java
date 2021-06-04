@@ -261,9 +261,12 @@ public class UserDaoImpl implements UserDao {
       try {
         statement.setDouble(1, balance);
         statement.setString(2, username);
-        statement.executeUpdate();
+        int i = statement.executeUpdate();
+        System.out.println(i);
         connection.commit();
+        System.out.println("after commit");
       } catch (SQLException e) {
+        System.out.println("ERROR");
         connection.rollback();
         e.printStackTrace();
         System.out.println(e.getMessage());

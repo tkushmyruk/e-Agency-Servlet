@@ -7,19 +7,19 @@
     <div>
         <div>
             <label><fmt:message key="login" bundle="${bundle}" /></label>
-            <input type="text" id="username" name="username" required />
+            <input type="text" id="username" name="username"/>
         </div>
     </div>
     <div>
         <div>
             <label><fmt:message key="password" bundle="${bundle}" /></label>
-            <input type="password" id="password" name="password" required />
+            <input type="password" id="password" name="password"/>
         </div>
     </div>
     <div>
         <div>
             <label><fmt:message key="email" bundle="${bundle}" /></label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email"/>
         </div>
     </div>
     <div>

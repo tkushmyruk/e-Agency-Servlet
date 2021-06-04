@@ -1,12 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
-<div>List of users</div>
+<div><fmt:message key="userList" bundle="${bundle}" /></div>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Role</th>
+        <th><fmt:message key="name" bundle="${bundle}" /></th>
+        <th><fmt:message key="role" bundle="${bundle}" /></th>
         <th></th>
     </tr>
     </thead>
@@ -54,6 +54,13 @@
                 </div>
             <button type="submit"><fmt:message key="changeRole" bundle="${bundle}" /></button>
             </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <c:forEach begin="1" end="${numberOfPages}" var="i">
+                    <a href="/Agency?command=userList&page=${i}">${i} </a>
+                </c:forEach>
             </td>
         </tr>
     </c:forEach>

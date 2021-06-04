@@ -27,7 +27,7 @@ public class CreditCardValidation {
     if(cardPassword == null || cardPassword.trim().equals("")){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.CARD_PASSWORD_EMPTY_ERROR));
     }
-    if(!user.getPassword().equals(cardPassword)){
+    if(!user.getCreditCard().getCardPassword().equals(cardPassword)){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.NOT_CORRECT_CARD_PASSWORD_ERROR));
     }
     if(balance == null || balance.trim().equals("")){
