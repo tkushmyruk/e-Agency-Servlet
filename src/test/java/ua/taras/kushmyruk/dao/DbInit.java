@@ -18,10 +18,10 @@ public class DbInit {
     String sql =  lines.stream().collect(Collectors.joining());
     URL url1 = UserDaoTest.class.getClassLoader().getResource("sql/insert_data.sql");
     List<String> linesWithMockData = Files.readAllLines(Paths.get(url1.toURI()));
-    String sqlWtithMockData =  linesWithMockData.stream().collect(Collectors.joining());
+    String sqlWithMockData =  linesWithMockData.stream().collect(Collectors.joining());
     try (Connection connection = ConnectionBuilder.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        PreparedStatement dataStatement = connection.prepareStatement(sqlWtithMockData)){
+        PreparedStatement dataStatement = connection.prepareStatement(sqlWithMockData)){
       statement.executeUpdate();
       dataStatement.executeUpdate();
     } catch (SQLException e) {

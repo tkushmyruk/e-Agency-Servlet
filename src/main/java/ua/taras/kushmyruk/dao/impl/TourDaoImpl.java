@@ -76,7 +76,6 @@ public class TourDaoImpl implements TourDao {
 
   private static final String UPDATE_HOTEL_STARS = "UPDATE hotel_stars SET hotel_stars = ? WHERE tour_name = ?";
 
-  private static final String DELETE_TOUR = "DELETE tour WHERE tour_name  = ?;";
 
   private Connection getConnection() throws SQLException {
     return ConnectionBuilder.getConnection();
@@ -373,12 +372,9 @@ public class TourDaoImpl implements TourDao {
 
   @Override
   public boolean deleteTour(String tourName) {
-    try(Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(DELETE_TOUR)) {
+    try(Connection connection = getConnection()) {
       connection.setAutoCommit(false);
       try {
-        statement.setString(1, tourName);
-        statement.executeUpdate();
         updateTourStatus(tourName, "CANCELED", connection);
         connection.commit();
         return true;
