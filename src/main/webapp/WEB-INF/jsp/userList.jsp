@@ -20,6 +20,7 @@
             <td>
                 <form method="post" action="Agency?command=userEdit">
                     <input type="hidden" name="method" value="activeMethod"/>
+                    <input type="hidden" name="pageNumber" value="${pageNumber}">
                     <input type="hidden" name="username" value="${user.getUsername()}"/>
                     <button type="submit">Active</button>
                 </form>
@@ -29,6 +30,7 @@
             <td>
                 <form method="post" action="Agency?command=userEdit">
                     <input type="hidden" name="method" value="blockMethod"/>
+                    <input type="hidden" name="pageNumber" value="${pageNumber}">
                     <input type="hidden" name="username" value="${user.getUsername()}"/>
                     <button type="submit">block</button>
                 </form>
@@ -36,6 +38,7 @@
             </c:if>
             <td><form method="post" action="Agency?command=userEdit">
                 <input type="hidden" name="method" value="roleMethod"/>
+                <input type="hidden" name="pageNumber" value="${pageNumber}">
                 <input type="hidden" name="username" value="${user.getUsername()}"/>
                 <div>
                     <p><b><fmt:message key="role" bundle="${bundle}" /></b></p>
@@ -56,14 +59,14 @@
             </form>
             </td>
         </tr>
+    </c:forEach>
         <tr>
             <td>
                 <c:forEach begin="1" end="${numberOfPages}" var="i">
-                    <a href="/Agency?command=userList&page=${i}">${i} </a>
+                    <a href="/Agency?command=userList&pageNumber=${i}">${i} </a>
                 </c:forEach>
             </td>
         </tr>
-    </c:forEach>
     </tbody>
 </table>
 </body>

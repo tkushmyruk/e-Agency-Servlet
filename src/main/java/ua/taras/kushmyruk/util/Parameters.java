@@ -40,4 +40,6 @@ public final class Parameters {
   public static final String REDACT = "redact";
   public static final String SORT_TYPE = "sortType";
   public static final String DIRECTION = "direction";
+  public static final String NUMBER_OF_PAGES = "numberOfPages";
+  public static final String PAGE_NUMBER  = "pageNumber";
 }

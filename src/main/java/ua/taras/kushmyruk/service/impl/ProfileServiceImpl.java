@@ -1,5 +1,6 @@
 package ua.taras.kushmyruk.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ public class ProfileServiceImpl implements ProfileService {
   private static CreditCardValidation creditCardValidation = new CreditCardValidation();
   private static final UserDao userDao = new UserDaoImpl();
   private static final TourDao tourDao = new TourDaoImpl();
+  private static final int PAGE_STEP = 4;
 
   public ProfileServiceImpl() {
   }
@@ -32,7 +34,17 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public void getUserList(HttpServletRequest request, HttpServletResponse response) {
-    request.setAttribute(Parameters.USER_LIST, userDao.findAllUsers());
+    List<User> users = userDao.findAllUsers();
+    int numberOfPages =  users.size() / PAGE_STEP + 1;
+    int pageNumber = Integer.valueOf(request.getParameter(Parameters.PAGE_NUMBER));
+    int startPosition = (pageNumber - 1) * PAGE_STEP;
+    List<User> result = new ArrayList<>();
+    for (int i = startPosition; i < startPosition + PAGE_STEP && i < users.size(); i++) {
+      result.add(users.get(i));
+    }
+    request.setAttribute(Parameters.NUMBER_OF_PAGES, numberOfPages);
+    request.setAttribute(Parameters.USER_LIST, result);
+    request.setAttribute(Parameters.PAGE_NUMBER, pageNumber);
   }
 
   @Override
