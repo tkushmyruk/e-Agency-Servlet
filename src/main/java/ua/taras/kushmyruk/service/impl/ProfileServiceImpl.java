@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
@@ -15,6 +17,7 @@ import ua.taras.kushmyruk.util.Parameters;
 import ua.taras.kushmyruk.validator.CreditCardValidation;
 
 public class ProfileServiceImpl implements ProfileService {
+  private static final Logger LOGGER  = LoggerFactory.getLogger(ProfileServiceImpl.class);
   private static CreditCardValidation creditCardValidation = new CreditCardValidation();
   private static final UserDao userDao = new UserDaoImpl();
   private static final TourDao tourDao = new TourDaoImpl();
@@ -60,15 +63,23 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   private void blockUser(HttpServletRequest request, HttpServletResponse response){
-    userDao.setBlock(request.getParameter(Parameters.USERNAME));
+    String username = request.getParameter(Parameters.USERNAME);
+    userDao.setBlock(username);
+    LOGGER.info("User {} was blocked", username);
   }
 
   private void activeUser(HttpServletRequest request, HttpServletResponse response){
-    userDao.setActive(request.getParameter(Parameters.USERNAME));
+    String username = request.getParameter(Parameters.USERNAME);
+    userDao.setActive(username);
+    LOGGER.info("User {} was activated", username);
+
   }
 
   private void changeRoleUser(HttpServletRequest request, HttpServletResponse response){
-    userDao.changeUserRole(request.getParameter(Parameters.USERNAME), request.getParameter(Parameters.ROLE));
+    String username = request.getParameter(Parameters.USERNAME);
+    String role = request.getParameter(Parameters.ROLE);
+    userDao.changeUserRole(username, role);
+    LOGGER.info("User {} changed role to {}", username , role);
   }
 
   @Override
@@ -79,6 +90,7 @@ public class ProfileServiceImpl implements ProfileService {
     User user = userDao.findUserByUsername(username);
     creditCardValidation.validateCreditCard(user, cardNumber, cardPassword);
     userDao.setCreditCard(username, cardNumber, cardPassword);
+    LOGGER.info("Users {} credit card with number {} ", username, cardNumber);
   }
 
   @Override

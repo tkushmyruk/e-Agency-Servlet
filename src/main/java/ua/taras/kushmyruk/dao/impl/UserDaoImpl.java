@@ -107,10 +107,10 @@ public class UserDaoImpl implements UserDao {
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -120,18 +120,16 @@ public class UserDaoImpl implements UserDao {
       connection.setAutoCommit(false);
       PreparedStatement statement = connection.prepareStatement(UPDATE_IS_ACTIVE);
       try {
-        System.out.println("set block!");
         statement.setBoolean(1, false);
         statement.setString(2, username);
         statement.executeUpdate();
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
-        System.out.println(e.getMessage());
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -143,14 +141,14 @@ public class UserDaoImpl implements UserDao {
       try {
         statement.setString(1, userRole);
         statement.setString(2, username);
-        int i = statement.executeUpdate();
+        statement.executeUpdate();
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -170,7 +168,7 @@ public class UserDaoImpl implements UserDao {
         list.add(user);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
     return list;
   }
@@ -224,11 +222,10 @@ public class UserDaoImpl implements UserDao {
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
-        System.out.println(e.getMessage());
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -245,11 +242,10 @@ public class UserDaoImpl implements UserDao {
         connection.commit();
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
-        System.out.println(e.getMessage());
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -261,18 +257,14 @@ public class UserDaoImpl implements UserDao {
       try {
         statement.setDouble(1, balance);
         statement.setString(2, username);
-        int i = statement.executeUpdate();
-        System.out.println(i);
+        statement.executeUpdate();
         connection.commit();
-        System.out.println("after commit");
       } catch (SQLException e) {
-        System.out.println("ERROR");
         connection.rollback();
-        e.printStackTrace();
-        System.out.println(e.getMessage());
+        logger.error(e.getMessage());
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
@@ -291,7 +283,7 @@ public class UserDaoImpl implements UserDao {
       return creditCard;
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
     return  creditCard;
   }

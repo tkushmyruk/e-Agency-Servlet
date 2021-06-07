@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.taras.kushmyruk.dao.ConnectionBuilder;
 import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.model.HotelStars;
@@ -17,6 +19,7 @@ import ua.taras.kushmyruk.model.TourStatus;
 import ua.taras.kushmyruk.model.TourType;
 
 public class TourDaoImpl implements TourDao {
+  private static final Logger LOGGER = LoggerFactory.getLogger(TourDaoImpl.class);
   private static final String INSERT_TOUR = "INSERT INTO tour(tour_name, count_of_people, price,"
       + "start_date, end_date, departing_from, country, locality, is_all_inclusive, is_hot,"
       + " hotel_name)"
@@ -106,8 +109,7 @@ public class TourDaoImpl implements TourDao {
       tour.setRoomType(getRoomType(connection, tourName));
       tour.setHotelStars(getHotelStars(connection, tourName));
     } catch (SQLException e) {
-      e.printStackTrace();
-      System.out.println(e.getMessage());
+      LOGGER.error(e.getMessage());
     }
     return tour;
   }
@@ -119,7 +121,7 @@ public class TourDaoImpl implements TourDao {
     PreparedStatement statement = connection.prepareStatement(GET_TOURS_BY_TOUR_STATUS)) {
       getTourList(tours, statement);
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return tours;
   }
@@ -183,11 +185,11 @@ public class TourDaoImpl implements TourDao {
         return true;
       } catch (SQLException e) {
         connection.rollback();
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return false;
   }
@@ -235,7 +237,7 @@ public class TourDaoImpl implements TourDao {
         result = true;
       } catch (Exception e) {
         connection.rollback();
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
       }
 
     } catch (SQLException e) {
@@ -261,7 +263,7 @@ public class TourDaoImpl implements TourDao {
       statement.setString(1, username);
       getTourList(tours, statement);
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return tours;
   }
@@ -315,13 +317,12 @@ public class TourDaoImpl implements TourDao {
         connection.commit();
         return true;
       } catch (SQLException e) {
-        System.out.println(e.getMessage());
         connection.rollback();
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return false;
   }
@@ -361,11 +362,11 @@ public class TourDaoImpl implements TourDao {
         return true;
       } catch (Exception e) {
         connection.rollback();
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return false;
   }
@@ -380,11 +381,11 @@ public class TourDaoImpl implements TourDao {
         return true;
       } catch (Exception e) {
         connection.rollback();
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return false;
   }

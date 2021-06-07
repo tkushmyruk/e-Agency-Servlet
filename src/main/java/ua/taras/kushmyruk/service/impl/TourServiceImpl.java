@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
@@ -22,6 +24,7 @@ import ua.taras.kushmyruk.util.Parameters;
 import ua.taras.kushmyruk.validator.TourValidator;
 
 public class TourServiceImpl implements TourService {
+  private static final Logger LOGGER  = LoggerFactory.getLogger(TourServiceImpl.class);
   private static final TourValidator tourValidator = new TourValidator();
   private static final TourDao tourDao = new TourDaoImpl();
   private static final UserDao userDao = new UserDaoImpl();
@@ -70,6 +73,7 @@ public class TourServiceImpl implements TourService {
     boolean isHot = request.getParameter(Parameters.IS_HOT) != null;
     tourDao.saveTour(tourName,countOfPeople, price, startDate, endDate, departingFrom, country, locality,
         tourType, roomType, hotelStars, hotelName, isAllInclusive, isHot);
+    LOGGER.info("Tour {} was successfully ", tourName);
   }
 
   @Override
@@ -83,6 +87,7 @@ public class TourServiceImpl implements TourService {
     tourValidator.validateBuyingTour(balanceOnCard, price);
     userDao.updateCreditCardBalance(username, balanceOnCard - price);
     tourDao.setUserForTour(tourName, username);
+    LOGGER.info("Tour {} was bought by {}", tourName, username );
   }
 
   @Override
@@ -107,6 +112,7 @@ public class TourServiceImpl implements TourService {
       boolean isHot = request.getParameter(Parameters.IS_HOT) != null;
       tourDao.updateTour(tourName, countOfPeople, price,  startDate, endDate, departingFrom, country, locality,
            tourType, roomType, hotelStars, hotelName, isAllInclusive, isHot);
+      LOGGER.info("Tour {} was successfully updated", tourName);
     }
   }
 
@@ -121,6 +127,7 @@ public class TourServiceImpl implements TourService {
     balanceOnCard += price;
     userDao.updateCreditCardBalance(username, balanceOnCard);
     tourDao.returnTour(tourName);
+    LOGGER.info("Tour {} was successfully returned ", tourName);
   }
 
   @Override
@@ -197,5 +204,6 @@ public class TourServiceImpl implements TourService {
   public void cancelTour(HttpServletRequest request, HttpServletResponse response) {
     String tourName = request.getParameter(Parameters.TOUR_NAME);
     tourDao.deleteTour(tourName);
+    LOGGER.info("Tour {} was successfully canceled", tourName);
   }
 }
