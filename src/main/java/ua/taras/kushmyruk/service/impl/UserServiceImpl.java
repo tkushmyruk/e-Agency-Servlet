@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
    user.setPassword(password);
    user.setEmail(email);
    user.setActive(true);
-   user.setRole(UserRole.ADMIN);
+   user.setRole(UserRole.USER);
     try {
       userDao.saveUser(user);
     } catch (DaoException e) {
