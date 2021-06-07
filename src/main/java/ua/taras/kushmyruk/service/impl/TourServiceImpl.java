@@ -16,6 +16,7 @@ import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.TourService;
 import ua.taras.kushmyruk.service.serviceUtil.TourCountOfPeopleComparator;
+import ua.taras.kushmyruk.service.serviceUtil.TourHotelStarsComparator;
 import ua.taras.kushmyruk.service.serviceUtil.TourPriceComparator;
 import ua.taras.kushmyruk.util.Parameters;
 import ua.taras.kushmyruk.validator.TourValidator;
@@ -152,53 +153,15 @@ public class TourServiceImpl implements TourService {
 
   private void sortByHotelStars(HttpServletRequest request, HttpServletResponse response, List<Tour> allTours){
     String direction = request.getParameter(Parameters.DIRECTION);
-    if (direction.equals("Desc")) {
-      List<Tour> oneStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.ONE))
-          .collect(Collectors.toList());
-      List<Tour> twoStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.TWO))
-          .collect(Collectors.toList());
-      List<Tour> threeStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.THREE))
-          .collect(Collectors.toList());
-      List<Tour> fourStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.FOUR))
-          .collect(Collectors.toList());
-      List<Tour> fiveStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.FIVE))
-          .collect(Collectors.toList());
-      List<Tour> resultTourList = new ArrayList<>();
-      resultTourList.addAll(fiveStar);
-      resultTourList.addAll(fourStar);
-      resultTourList.addAll(threeStar);
-      resultTourList.addAll(twoStar);
-      resultTourList.addAll(oneStar);
-      request.setAttribute(Parameters.NOT_BOUGHT_TOURS, resultTourList);
+    TourHotelStarsComparator comparator = new TourHotelStarsComparator();
+    if (direction != null && direction.equals("Asc")) {
+      allTours.sort(comparator);
+      request.setAttribute(Parameters.NOT_BOUGHT_TOURS, allTours);
     }
-    if (direction.equals("Asc")) {
-      List<Tour> oneStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.ONE))
-          .collect(Collectors.toList());
-      List<Tour> twoStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.TWO))
-          .collect(Collectors.toList());
-      List<Tour> threeStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.THREE))
-          .collect(Collectors.toList());
-      List<Tour> fourStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.FOUR))
-          .collect(Collectors.toList());
-      List<Tour> fiveStar = allTours.stream()
-          .filter(tour -> tour.getHotelStars().equals(HotelStars.FIVE))
-          .collect(Collectors.toList());
-      List<Tour> resultTourList = new ArrayList<>();
-      resultTourList.addAll(oneStar);
-      resultTourList.addAll(twoStar);
-      resultTourList.addAll(threeStar);
-      resultTourList.addAll(fourStar);
-      resultTourList.addAll(fiveStar);
-      request.setAttribute(Parameters.NOT_BOUGHT_TOURS, resultTourList);
+    if(direction != null && direction.equals("Desc")){
+      allTours.sort(comparator);
+      Collections.reverse(allTours);
+      request.setAttribute(Parameters.NOT_BOUGHT_TOURS, allTours);
     }
   }
 
