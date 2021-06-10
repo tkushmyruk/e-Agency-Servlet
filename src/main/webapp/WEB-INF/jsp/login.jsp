@@ -7,11 +7,11 @@
     <div>
         <div>
             <label><fmt:message key="login" bundle="${bundle}"/></label>
-            <input type="text" id="username" name="username"  required />
+            <input type="text" id="username" name="username" />
         </div>
         <div>
             <label><fmt:message key="password" bundle="${bundle}" /></label>
-            <input type="password" id="password" name="password" required />
+            <input type="password" id="password" name="password" />
         </div>
     </div>
     <div>

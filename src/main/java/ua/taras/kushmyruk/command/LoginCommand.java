@@ -26,6 +26,7 @@ public class LoginCommand  implements Command{
 
   @Override
   public String doOnError(HttpServletRequest request, Exception e) throws AppException {
+    LOGGER.error(e.getMessage());
     request.setAttribute(Parameters.EXCEPTION, e.getMessage());
     return Pages.LOGIN_PAGE;
   }
