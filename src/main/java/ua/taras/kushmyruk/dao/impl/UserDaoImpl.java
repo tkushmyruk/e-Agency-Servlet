@@ -188,7 +188,7 @@ public class UserDaoImpl implements UserDao {
         preparedStatement.setString(3, user.getEmail());
         preparedStatement.setBoolean(4, user.isActive());
         preparedStatement.executeUpdate();
-        saveUserRole(connection, user.getUsername());
+        saveUserRole(connection, user.getUsername(), user.getRole().toString());
         connection.commit();
       }catch (SQLException e){
         logger.error(e.getMessage());
@@ -201,10 +201,10 @@ public class UserDaoImpl implements UserDao {
   }
 
 
-  public int saveUserRole(Connection connection,String username) throws SQLException{
+  public int saveUserRole(Connection connection,String username, String userRole) throws SQLException{
     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_ROLE);
     preparedStatement.setString(1, username);
-    preparedStatement.setString(2, UserRole.ADMIN.toString());
+    preparedStatement.setString(2, userRole);
     int i = preparedStatement.executeUpdate();
     return i;
   }

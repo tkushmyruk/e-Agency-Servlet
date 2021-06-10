@@ -5,9 +5,9 @@ import ua.taras.kushmyruk.exception.AppException;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.util.ExceptionMessage;
 
-public class CreditCardValidation {
+public class CreditCardValidator {
   private static final String cardNumberPassword =
-      "(4[0-9]{12}(?:[0-9]{3})?)";
+      "^4[0-9]{12}(?:[0-9]{3})?$";
   public void validateCreditCard(User user, String cardNumber, String cardPassword){
     if(user.getCreditCard()!= null){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.CREDIT_CARD_EXISTS_ERROR));
@@ -18,7 +18,8 @@ public class CreditCardValidation {
     if(cardPassword == null || cardPassword.trim().equals("")){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.CARD_PASSWORD_EMPTY_ERROR));
     }
-    if(Pattern.matches(cardNumberPassword, cardNumber)){
+    cardNumber = cardNumber.replace(" ", "");
+    if(!Pattern.matches(cardNumberPassword, cardNumber)){
       throw new AppException(ExceptionMessage.getMessage(ExceptionMessage.CARD_NUMBER_PATTERN_ERROR));
     }
   }

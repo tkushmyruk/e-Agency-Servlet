@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
    user.setEmail(email);
    user.setActive(true);
    user.setRole(UserRole.USER);
+    System.out.println(user.getRole().toString());
     try {
       userDao.saveUser(user);
     } catch (DaoException e) {

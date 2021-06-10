@@ -14,11 +14,11 @@ import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.ProfileService;
 import ua.taras.kushmyruk.util.Parameters;
-import ua.taras.kushmyruk.validator.CreditCardValidation;
+import ua.taras.kushmyruk.validator.CreditCardValidator;
 
 public class ProfileServiceImpl implements ProfileService {
   private static final Logger LOGGER  = LoggerFactory.getLogger(ProfileServiceImpl.class);
-  private static CreditCardValidation creditCardValidation = new CreditCardValidation();
+  private static CreditCardValidator creditCardValidator = new CreditCardValidator();
   private static final UserDao userDao = new UserDaoImpl();
   private static final TourDao tourDao = new TourDaoImpl();
   private static final int PAGE_STEP = 4;
@@ -88,7 +88,7 @@ public class ProfileServiceImpl implements ProfileService {
     String cardNumber = request.getParameter(Parameters.CARD_NUMBER);
     String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
     User user = userDao.findUserByUsername(username);
-    creditCardValidation.validateCreditCard(user, cardNumber, cardPassword);
+    creditCardValidator.validateCreditCard(user, cardNumber, cardPassword);
     userDao.setCreditCard(username, cardNumber, cardPassword);
     LOGGER.info("Users {} credit card with number {} ", username, cardNumber);
   }
@@ -99,7 +99,7 @@ public class ProfileServiceImpl implements ProfileService {
     String cardPassword = request.getParameter(Parameters.CARD_PASSWORD);
     String balanceFromRequest = request.getParameter(Parameters.REPLENISH);
     User user = userDao.findUserByUsername(username);
-    creditCardValidation.validateReplenishCard(user, cardPassword, balanceFromRequest);
+    creditCardValidator.validateReplenishCard(user, cardPassword, balanceFromRequest);
     double balance = Double.valueOf(balanceFromRequest);
     if(user.getCreditCard().getCardPassword().equals(cardPassword)) {
       double currentBalance = user.getCreditCard().getBalance();

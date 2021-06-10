@@ -1,7 +1,6 @@
 package ua.taras.kushmyruk.service.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import ua.taras.kushmyruk.dao.TourDao;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.dao.impl.TourDaoImpl;
 import ua.taras.kushmyruk.dao.impl.UserDaoImpl;
-import ua.taras.kushmyruk.model.HotelStars;
 import ua.taras.kushmyruk.model.Tour;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.service.TourService;
