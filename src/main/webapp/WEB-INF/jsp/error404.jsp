@@ -6,9 +6,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
-<label><c:out value="${exception}"/></label>
+<label class="error"><c:out value="${exception}"/></label>
 
-<p><fmt:message key="errorMessage404" bundle="${bundle}"/></p>
+<p class="error"><fmt:message key="errorMessage404" bundle="${bundle}"/></p>
 <a href="/Agency?command=index">Redirect to main page</a>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 <div>TOUR INFO</div>
-<div>
+<div id="tour-info">
     <p><h3 align="center">${tour.getTourName()}</h3></p>
     <h4><fmt:message key="tourFor" bundle="${bundle}" />
         <c:if test="${tour.getTourType() == 'REST'}">
@@ -38,7 +38,7 @@ ${tour.getRoomType().toString()} <fmt:message key="class" bundle="${bundle}" /><
     <div>
         <form action="Agency?command=returnTour" method="post">
             <input type="hidden" name="tourName" value="${tour.getTourName()}">
-            <button type="submit"><fmt:message key="return" bundle="${bundle}" /></button>
+            <button class="button" type="submit"><fmt:message key="return" bundle="${bundle}" /></button>
         </form>
     </div>
 </c:if>
@@ -49,6 +49,6 @@ ${tour.getRoomType().toString()} <fmt:message key="class" bundle="${bundle}" /><
         <button type="submit"><fmt:message key="buy" bundle="${bundle}" /></button>
     </form>
 </div>
-    <label><c:out value="${exception}"/></label>
+    <label class="error"><c:out value="${exception}"/></label>
 </c:if>
 </body>

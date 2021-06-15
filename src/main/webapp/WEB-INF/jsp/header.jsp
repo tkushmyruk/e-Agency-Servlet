@@ -4,6 +4,46 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Agency</title>
+    <style>
+        header {background-color: rgba(20, 20, 00, 0.2)}
+        a {color: midnightblue; text-decoration: underline; font-style: italic}
+        body{background-color: rgba(00, 00, 50, 0.05)}
+        #header-button {background-color: slategrey;
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 0.4em;
+        }
+        #tour-info{
+            color: rgb(30, 00, 20);
+            font-family: "Times New Roman";
+        }
+        .login-label {
+            color: navy;
+            font-weight: bold;
+            display: block;
+            width: 100px;
+            line-height: 25px;
+            float: left;
+        }
+        .login-input{
+            margin-top: 0.4em;
+        }
+        .button{background-color: royalblue;
+            color: bisque;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 0.4em;
+        }
+        .error{
+            color: #D8000C;
+            background-color: #FFBABA;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -11,9 +51,9 @@
     <form action="Agency" method="POST">
         <div><input name="command" value="setLang" type="hidden"/></div>
         <div><input name="page" value="${page}" type="hidden"/></div>
-        <input type="radio" id="lang" name="lang" value="en" checked="checked"/>EN
-        <input type="radio" id="lang" name="lang" value="ua"/>UA
-        <button type="submit">
+        <input style="font-family: 'Times New Roman'; font-style: italic" type="radio" id="lang" name="lang" value="en" checked="checked"/>EN
+        <input style="font-family: 'Times New Roman'; font-style: italic" type="radio" id="lang" name="lang" value="ua"/>UA
+        <button id="header-button" type="submit">
             <fmt:message key="changeLang" bundle="${bundle}"/>
         </button>
     </form>

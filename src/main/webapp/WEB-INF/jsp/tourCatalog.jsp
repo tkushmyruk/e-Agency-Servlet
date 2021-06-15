@@ -11,28 +11,28 @@
         <label> Rest <input type="radio" id="rest" name="tourType" value="REST"/></label>
         <label> Excursion <input type="radio" id="excursion" name="tourType" value="EXCURSION"/></label>
         <label> Shopping <input type="radio" id="shopping" name="tourType" value="SHOPPING"/></label>
-        <button type="submit">Sort</button>
+        <button class="button-sort" type="submit">Sort</button>
     </form>
     <form method="post" action="Agency?command=sorting">
         <div>By Hotel Stars</div>
         <input type="hidden" name="sortType" value="byHotelStars">
         <label>Ascending<input type="radio" id="Asc" name="direction" value="Asc"/></label>
         <label>Descending<input type="radio" id="Desc" name="direction" value="Desc"/></label>
-        <button type="submit">Sort</button>
+        <button class="button-sort" type="submit">Sort</button>
     </form>
     <form method="post" action="Agency?command=sorting">
         <div>By Price</div>
         <input type="hidden" name="sortType" value="byPrice">
         <label>Ascending<input type="radio" id="Asc" name="direction" value="Asc"/></label>
         <label>Descending<input type="radio" id="Desc" name="direction" value="Desc"/></label>
-        <button type="submit">Sort</button>
+        <button class="button-sort" type="submit">Sort</button>
     </form>
     <form method="post" action="Agency?command=sorting">
         <div>By Count of People</div>
         <input type="hidden" name="sortType" value="byCountOfPeople">
         <label>Ascending<input type="radio" id="Asc" name="direction" value="Asc"/></label>
         <label>Descending<input type="radio" id="Desc" name="direction" value="Desc"/></label>
-        <button type="submit">Sort</button>
+        <button class="button-sort" type="submit">Sort</button>
     </form>
 </div>
 <c:forEach var="tour" items="${notBoughtTours}">
@@ -50,7 +50,7 @@
         </div>
         <div>
             <form method="post" action="/Agency?command=cancelTour&tourName=${tour.getTourName()}">
-                <button type="submit"><fmt:message key="cancel" bundle="${bundle}"/></button>
+                <button  class="button" type="submit"><fmt:message key="cancel" bundle="${bundle}"/></button>
             </form>
         </div>
     </div>

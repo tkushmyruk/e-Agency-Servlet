@@ -2,7 +2,7 @@
 <body>
 <%@include file="/WEB-INF/jsp/header.jsp" %>
 <form action="Agency?command=addTour" method="POST">
-    <label><c:out value="${exception}"/></label>
+    <label class="error"><c:out value="${exception}"/></label>
     <div><input name="command" value="registration" type="hidden"/></div>
     <div>
         <div>

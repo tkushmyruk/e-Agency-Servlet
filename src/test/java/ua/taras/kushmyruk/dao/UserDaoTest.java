@@ -49,7 +49,7 @@ public class UserDaoTest {
   public void findAllUsersTest(){
     List<User> allUsers = userDao.findAllUsers();
     Assert.assertNotNull(allUsers);
-    Assert.assertEquals(2, allUsers.size());
+    Assert.assertEquals(10, allUsers.size());
   }
 
   @Test

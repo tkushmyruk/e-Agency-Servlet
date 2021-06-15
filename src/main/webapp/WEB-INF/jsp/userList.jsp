@@ -22,7 +22,7 @@
                     <input type="hidden" name="method" value="activeMethod"/>
                     <input type="hidden" name="pageNumber" value="${pageNumber}">
                     <input type="hidden" name="username" value="${user.getUsername()}"/>
-                    <button type="submit">Active</button>
+                    <button class="button" type="submit">Active</button>
                 </form>
             </td>
             </c:if>
@@ -32,7 +32,7 @@
                     <input type="hidden" name="method" value="blockMethod"/>
                     <input type="hidden" name="pageNumber" value="${pageNumber}">
                     <input type="hidden" name="username" value="${user.getUsername()}"/>
-                    <button type="submit">block</button>
+                    <button class="button" type="submit">block</button>
                 </form>
             </td>
             </c:if>
@@ -55,7 +55,7 @@
                         <label for="user"><fmt:message key="user" bundle="${bundle}" /></label>
                     </div>
                 </div>
-            <button type="submit"><fmt:message key="changeRole" bundle="${bundle}" /></button>
+            <button class="button" type="submit"><fmt:message key="changeRole" bundle="${bundle}" /></button>
             </form>
             </td>
         </tr>

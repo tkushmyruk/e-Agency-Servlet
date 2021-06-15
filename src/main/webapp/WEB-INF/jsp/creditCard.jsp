@@ -10,6 +10,6 @@
     <input type="hidden" name="cardNumber" value="${user.getCreditCard().getCardNumber()}">
     <input type="number" step="0.01" name="replenish">
     <input type="password" name="cardPassword">
-    <button type="submit"><fmt:message key="save" bundle="${bundle}"/></button>
+    <button class="button" type="submit"><fmt:message key="save" bundle="${bundle}"/></button>
 </form>
 </body>
