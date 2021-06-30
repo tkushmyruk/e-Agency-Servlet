@@ -28,5 +28,6 @@ public final class CommandNames {
   public static final String RETURN_TOUR_COMMAND = "returnTour";
   public static final String SORTING_COMMAND = "sorting";
   public static final String CANCEL_TOUR_COMMAND = "cancelTour";
+  public static final String SEND_MESSAGE_COMMAND = "sendMessage";
 
 }

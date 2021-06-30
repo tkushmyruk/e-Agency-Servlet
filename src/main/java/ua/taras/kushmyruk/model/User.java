@@ -10,6 +10,7 @@ public class User {
   private String email;
   private UserRole role;
   private List<Tour> boughtTours;
+  private List<Message> messages;
   private CreditCard creditCard;
 
   public Long getId() {
@@ -74,6 +75,14 @@ public class User {
 
   public void setCreditCard(CreditCard creditCard) {
     this.creditCard = creditCard;
+  }
+
+  public List<Message> getMessages() {
+    return messages;
+  }
+
+  public void setMessages(List<Message> messages) {
+    this.messages = messages;
   }
 
   @Override

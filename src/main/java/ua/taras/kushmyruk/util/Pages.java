@@ -15,4 +15,5 @@ public final class Pages {
   public static final String BOUGHT_TOURS_PAGE = "WEB-INF/jsp/boughtTours.jsp";
   public static final String REDACT_TOUR_PAGE = "WEB-INF/jsp/redactTour.jsp";
   public static final String ADD_CREDIT_CARD_PAGE = "WEB-INF/jsp/addCreditCard.jsp";
+  public static final String SEND_MESSAGE_PAGE = "WEB-INF/jsp/sendMessage.jsp";
 }

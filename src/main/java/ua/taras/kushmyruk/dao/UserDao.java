@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import ua.taras.kushmyruk.exception.DaoException;
 import ua.taras.kushmyruk.model.CreditCard;
+import ua.taras.kushmyruk.model.Message;
 import ua.taras.kushmyruk.model.User;
 
 public interface UserDao {
@@ -27,4 +28,8 @@ public interface UserDao {
     void updateCreditCardBalance(String username, double balance);
 
     CreditCard findCreditCardByNumber(String cardNumber);
+
+    void saveMessage(String topic, String tag, String text, String username);
+
+    List<Message> getUserMessages(String username);
 }

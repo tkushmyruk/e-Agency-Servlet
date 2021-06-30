@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS credit_card;
+DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS room_type;
 DROP TABLE IF EXISTS tour_type;
 DROP TABLE IF EXISTS hotel_stars;
@@ -31,6 +32,17 @@ card_number VARCHAR(19) UNIQUE,
 card_password VARCHAR(60) NOT NULL,
 balance DECIMAL,
 PRIMARY KEY (credit_card_id),
+FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
+);
+
+CREATE TABLE message(
+message_id SERIAL,
+topic VARCHAR(255),
+tag VARCHAR(30),
+text VARCHAR(2048),
+username VARCHAR(30),
+is_viewed BOOLEAN DEFAULT FALSE,
+PRIMARY KEY (message_id),
 FOREIGN KEY (username) REFERENCES usr(username) ON DELETE RESTRICT
 );
 

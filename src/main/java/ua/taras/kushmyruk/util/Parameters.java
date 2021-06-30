@@ -42,4 +42,9 @@ public final class Parameters {
   public static final String DIRECTION = "direction";
   public static final String NUMBER_OF_PAGES = "numberOfPages";
   public static final String PAGE_NUMBER  = "pageNumber";
+  public static final String TOPIC = "topic";
+  public static final String TAG = "tag";
+  public static final String MESSAGE_TEXT = "messageText";
+  public static final String RECEIVER = "receiver";
+  public static final String USER_MESSAGE = "userMessages";
 }

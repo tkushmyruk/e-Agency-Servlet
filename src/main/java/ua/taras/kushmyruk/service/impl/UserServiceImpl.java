@@ -90,4 +90,18 @@ public class UserServiceImpl implements UserService {
     request.setAttribute(Parameters.USER, user);
   }
 
+  @Override
+  public void sendMessage(HttpServletRequest request, HttpServletResponse response) {
+   String topic = request.getParameter(Parameters.TOPIC);
+   String tag = request.getParameter(Parameters.TAG);
+   String text = request.getParameter(Parameters.MESSAGE_TEXT);
+   String username = request.getParameter(Parameters.RECEIVER);
+   userDao.saveMessage(topic, tag, text, username);
+  }
+
+  @Override
+  public void getUserMessages(HttpServletRequest request, HttpServletResponse response) {
+    request.setAttribute(Parameters.USER_MESSAGE, userDao.getUserMessages(
+        (String) request.getSession().getAttribute(Parameters.USER)) );
+  }
 }

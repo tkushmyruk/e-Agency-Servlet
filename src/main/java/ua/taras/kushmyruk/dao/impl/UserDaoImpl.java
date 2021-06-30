@@ -12,6 +12,7 @@ import ua.taras.kushmyruk.dao.ConnectionBuilder;
 import ua.taras.kushmyruk.dao.UserDao;
 import ua.taras.kushmyruk.exception.DaoException;
 import ua.taras.kushmyruk.model.CreditCard;
+import ua.taras.kushmyruk.model.Message;
 import ua.taras.kushmyruk.model.User;
 import ua.taras.kushmyruk.model.UserRole;
 
@@ -26,12 +27,14 @@ public class UserDaoImpl implements UserDao {
   private final String INSERT_CREDIT_CARD = "INSERT INTO credit_card (card_number, card_password, username)"
       + "VALUES(?,?,?);";
 
+  private final String INSERT_MESSAGE = "INSERT INTO message (topic, tag, text, username)"
+      + "VALUES (?,?,?,?);";
+
   private final String GET_USER_BY_USERNAME = "SELECT * FROM usr u "
       + "INNER JOIN user_role ur ON u.username = ur.username "
       + "WHERE u.username = ?; ";
 
   private final String GET_USER_CREDIT_CARD = "SELECT * FROM credit_card WHERE username = ?;";
-
 
   private final String GET_ALL_USERS = "SELECT * FROM usr u INNER JOIN user_role r "
       + "ON u.username = r.username;";
@@ -46,6 +49,7 @@ public class UserDaoImpl implements UserDao {
 
   private final String UPDATE_CARD_BALANCE = "UPDATE credit_card SET balance = ? WHERE username = ?;";
 
+  private final String GET_MESSAGES_BY_USERNAME = "SELECT * FROM message WHERE username = ?;";
 
 
   private Connection getConnection() throws SQLException {
@@ -286,5 +290,47 @@ public class UserDaoImpl implements UserDao {
       logger.error(e.getMessage());
     }
     return  creditCard;
+  }
+
+  @Override
+  public void saveMessage(String topic, String tag, String text, String username) {
+    try(Connection connection = getConnection()){
+      connection.setAutoCommit(false);
+      PreparedStatement statement = connection.prepareStatement(INSERT_MESSAGE);
+      try {
+        statement.setString(1, topic);
+        statement.setString(2, tag);
+        statement.setString(3, text);
+        statement.setString(4, username);
+        statement.executeUpdate();
+        connection.commit();
+      } catch (Exception e) {
+        connection.rollback();
+        logger.error(e.getMessage());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public List<Message> getUserMessages(String username) {
+    List<Message> messages = new ArrayList<>();
+    try(Connection connection =  getConnection()){
+      PreparedStatement statement = connection.prepareStatement(GET_MESSAGES_BY_USERNAME);
+      statement.setString(1,  username);
+      ResultSet resultSet = statement.executeQuery();
+      while (resultSet.next()){
+        Message message = new Message();
+        message.setTopic(resultSet.getString("topic"));
+        message.setTag(resultSet.getString("tag"));
+        message.setText(resultSet.getString("text"));
+        message.setViewed(resultSet.getBoolean("is_viewed"));
+        messages.add(message);
+      }
+    } catch (SQLException e) {
+      logger.error(e.getMessage());
+    }
+    return messages;
   }
 }

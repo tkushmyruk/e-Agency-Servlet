@@ -17,4 +17,8 @@ public interface UserService {
 
   void getUser (HttpServletRequest request, HttpServletResponse response);
 
+  void sendMessage(HttpServletRequest request, HttpServletResponse response);
+
+  void getUserMessages(HttpServletRequest request, HttpServletResponse response);
+
 }
